@@ -34,25 +34,27 @@ struct Home: View {
                 .frame(maxWidth: .infinity)
                 .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
                 .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
+                
+                Button(action: {}) {
                     
-                HStack {
-                        
-                    // Replace with food chart
-                    Image("Home2").resizable().aspectRatio(contentMode: .fit)
-                        
-                    VStack {
+                    HStack {
                             
-                        Text("Track today's heath habits")
-                            .foregroundColor(Color.red)
+                        // Replace with food chart
+                        Image("Home").resizable().aspectRatio(contentMode: .fit)
                         
-                        Button(action: {}) {
+                        VStack {
+                                
+                            Text("Track today's heath habits")
+                                .foregroundColor(Color.red)
+                                
                             Text(">>>")
                                 .font(.largeTitle)
                                 .foregroundColor(Color.black)
+
                         }
-                            
                     }
                 }
+                .padding(.all)
             }
             .frame(maxWidth: .infinity)
             .cornerRadius(25)
@@ -65,9 +67,11 @@ struct Home: View {
             Button(action: {}) {
                 HStack {
                     Text("Track Food Eaten")
+                    Spacer()
+                    Image("Food").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
                 }
             }
-            .padding(.vertical)
+            .padding(.all)
             .frame(maxWidth: .infinity)
             .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
             .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
@@ -78,10 +82,11 @@ struct Home: View {
                 
             Button(action: {}) {
                 HStack {
+                    Image("Stool").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
                     Text("Track Gut Conditions")
                 }
             }
-            .padding(.vertical)
+            .padding(.all)
             .frame(maxWidth: .infinity)
             .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
             .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)

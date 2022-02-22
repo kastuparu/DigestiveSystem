@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct TrackFood: View {
+    
+    @State private var checked = true
+    
+    init() {
+            UITextView.appearance().backgroundColor = .clear
+        }
+    
     var body: some View {
         VStack {
             
@@ -23,6 +30,7 @@ struct TrackFood: View {
             HStack {
                 DatePicker(selection: /*@START_MENU_TOKEN@*/.constant(Date())/*@END_MENU_TOKEN@*/, label: {  })
                     .labelsHidden()
+                    
                 
                 Picker(selection: .constant(0), label: Text("")) {
                     Text("").tag(0)
@@ -55,22 +63,92 @@ struct TrackFood: View {
             HStack {
                 
                 // Replace with food chart
-                Image("Home2").resizable().aspectRatio(contentMode: .fit)
+                Image("Home").resizable().aspectRatio(contentMode: .fit)
+                
+                Spacer()
                 
                 VStack {
                     
-                    Text("Upload image (optional)")
+                    Text("Upload image")
                         .multilineTextAlignment(.center)
                     
-                    // Add upload icon later
+                    Image("Upload").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
+                    
                 }
+                .frame(width: 100)
             }
             
+            HStack {
+                
+                Spacer()
+                
+                VStack {
+                    CheckBoxView(checked: $checked)
+                    CheckBoxView(checked: $checked)
+                    CheckBoxView(checked: $checked)
+                }
+                
+                VStack {
+                    Text("probiotics")
+                    Text("collagens")
+                    Text("garlic/onion")
+                }
+                
+                Spacer()
+                
+                VStack {
+                    CheckBoxView(checked: $checked)
+                    CheckBoxView(checked: $checked)
+                    CheckBoxView(checked: $checked)
+                }
+                
+                VStack {
+                    Text("processed")
+                    Text("spicy")
+                    Text("high sugar")
+                }
+                
+                Spacer()
+                
+            }
+            .padding(.all)
             
+            Text("Notes")
+                .font(.headline)
+              
+            TextEditor(text: .constant("Default text"))
+                .padding(.all)
+                .frame(maxWidth: .infinity)
+                .frame(maxHeight: 75)
+                .foregroundColor(Color.black)
+                .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
+                .cornerRadius(12)
+                .font(.body)
             
+            HStack {
             
-            
-            
+                Button(action: {}) {
+                    HStack {
+                        
+                        Image("Cancel").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
+                        
+                        Text("Go Back")
+                            .foregroundColor(Color.black)
+                    }
+                }
+                
+                Spacer()
+                
+                Button(action: {}) {
+                    HStack {
+                        
+                        Text("Save")
+                            .foregroundColor(Color.black)
+                        
+                        Image("Checkmark").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
+                    }
+                }
+            }
         }
         .padding(.all)
     }

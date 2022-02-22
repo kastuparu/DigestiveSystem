@@ -16,6 +16,7 @@
 		42D5FE7027BE8155002BD73C /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D5FE6F27BE8155002BD73C /* Home.swift */; };
 		42D5FE7427BE87F3002BD73C /* DailySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D5FE7327BE87F3002BD73C /* DailySummary.swift */; };
 		42F9FD7027C295800035C8DE /* TrackFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9FD6F27C295800035C8DE /* TrackFood.swift */; };
+		42F9FD7227C3C10F0035C8DE /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9FD7127C3C10F0035C8DE /* CheckBoxView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		42D5FE6F27BE8155002BD73C /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		42D5FE7327BE87F3002BD73C /* DailySummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailySummary.swift; sourceTree = "<group>"; };
 		42F9FD6F27C295800035C8DE /* TrackFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFood.swift; sourceTree = "<group>"; };
+		42F9FD7127C3C10F0035C8DE /* CheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				42AEF42227927B3B0022B87F /* digestivesystemApp.swift */,
 				42AEF42327927B3B0022B87F /* ContentView.swift */,
 				42AEF42427927B3E0022B87F /* Assets.xcassets */,
+				42F9FD7127C3C10F0035C8DE /* CheckBoxView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42F9FD7027C295800035C8DE /* TrackFood.swift in Sources */,
+				42F9FD7227C3C10F0035C8DE /* CheckBoxView.swift in Sources */,
 				42AEF43427927B3E0022B87F /* ContentView.swift in Sources */,
 				42D5FE7027BE8155002BD73C /* Home.swift in Sources */,
 				42D5FE7427BE87F3002BD73C /* DailySummary.swift in Sources */,

@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Reading2.png",
+      "filename" : "ReadingS1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "ReadingS2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "ReadingS3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

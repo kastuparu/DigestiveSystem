@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "HomeS1.png",
+      "filename" : "Checkmark1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "HomeS2.png",
+      "filename" : "Checkmark2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "HomeS3.png",
+      "filename" : "Checkmark3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

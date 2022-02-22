@@ -25,21 +25,22 @@ struct DailySummary: View {
                     
                     HStack {
                         
-                        Image("Home2").resizable().aspectRatio(contentMode: .fit)
+                        Image("Home").resizable().aspectRatio(contentMode: .fit)
                         
                         VStack {
                             
                             Text("You are eating less ___ than normal today")
                                 .foregroundColor(Color.red)
+                                .frame(width: 125)
                             
                             Button(action: {}) {
                                 HStack {
-                                    Text("New Food Entry")
-                                        .font(.body)
+                                    Text("New").font(.body)
+                                    Image("Food").resizable().aspectRatio(contentMode: .fit)
                                 }
                             }
                             .padding(.vertical)
-                            .frame(maxWidth: .infinity)
+                            .frame(width: 125, height: 75)
                             .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
                             .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
                             .cornerRadius(12)
@@ -47,18 +48,20 @@ struct DailySummary: View {
                             
                             Button(action: {}) {
                                 HStack {
-                                    Text("New Stool Entry")
-                                        .font(.body)
+                                    Image("Stool").resizable().aspectRatio(contentMode: .fit)
+                                    Text("New").font(.body)
                                 }
                             }
-                            .padding(.vertical)
-                            .frame(maxWidth: .infinity)
+                            .padding(.all)
+                            .frame(width: 125, height: 75)
                             .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
                             .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
                             .cornerRadius(12)
                             .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
                         }
                     }
+                    
+                    Spacer(minLength: 25)
                     
                     HStack {
                         
@@ -145,6 +148,8 @@ struct DailySummary: View {
                         }
                     }
                     
+                    Spacer(minLength: 25)
+                    
                     Text("Notes (include alcohol, drugs, and caffeine)")
                     TextEditor(text: .constant("Default text"))
                         .padding(.all)
@@ -155,55 +160,74 @@ struct DailySummary: View {
                         .cornerRadius(12)
                         .font(.body)
                     
+                    Spacer(minLength: 25)
+                    
                     // Add a RecyclerView to include each entry of the day
                     
-                    Button(action: {}) {
-                        HStack {
-                            
-                            // food plate icon
-                            
-                            Text("3:14 pm")
-                            
-                            Text("notes...")
-                            
-                            // trash icon button
-                        }
-                    }
-                    .padding(.vertical)
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
-                    .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
-                    .cornerRadius(12)
-                    .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
+                    VStack {
                     
-                    Button(action: {}) {
-                        HStack {
-                            
-                            // food plate icon
-                            
-                            Text("3:14 pm")
-                            
-                            Text("notes...")
-                            
-                            // trash icon button
-                            
+                        Button(action: {}) {
+                            HStack {
+                                
+                                Image("Food").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
+                                
+                                Spacer()
+                                
+                                Text("3:14 pm")
+                                
+                                Spacer()
+                                
+                                Text("notes...")
+                                
+                                Spacer()
+                                
+                                Image("Trash").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
+                                
+                            }
                         }
+                        .padding(.all)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
+                        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
+                        .cornerRadius(12)
+                        .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
+                        
+                        Button(action: {}) {
+                            HStack {
+                                
+                                Image("Food").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
+                                
+                                Spacer()
+                                
+                                Text("3:14 pm")
+                                
+                                Spacer()
+                                
+                                Text("notes...")
+                                
+                                Spacer()
+                                
+                                Image("Trash").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
+                                
+                            }
+                        }
+                        .padding(.all)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
+                        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
+                        .cornerRadius(12)
+                        .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
+                        
                     }
-                    .padding(.vertical)
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
-                    .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
-                    .cornerRadius(12)
-                    .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
                 }
             }
             
             HStack {
             
                 Button(action: {}) {
-                    VStack {
+                    HStack {
                         
-                        // Go back arrow image
+                        Image("Cancel").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
                         
                         Text("Go Back")
                             .foregroundColor(Color.black)
@@ -213,12 +237,12 @@ struct DailySummary: View {
                 Spacer()
                 
                 Button(action: {}) {
-                    VStack {
-                        
-                        // Save check mark image
+                    HStack {
                         
                         Text("Save")
                             .foregroundColor(Color.black)
+                        
+                        Image("Checkmark").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
                     }
                 }
             }
