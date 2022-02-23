@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		426CC88427C59B6600FEF881 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426CC88327C59B6600FEF881 /* Calendar.swift */; };
 		427424A927C53EB60065B8D1 /* TrackStool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427424A827C53EB60065B8D1 /* TrackStool.swift */; };
 		42AEF43227927B3E0022B87F /* digestivesystemApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AEF42227927B3B0022B87F /* digestivesystemApp.swift */; };
 		42AEF43327927B3E0022B87F /* digestivesystemApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AEF42227927B3B0022B87F /* digestivesystemApp.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		426CC88327C59B6600FEF881 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		427424A827C53EB60065B8D1 /* TrackStool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackStool.swift; sourceTree = "<group>"; };
 		42AEF42227927B3B0022B87F /* digestivesystemApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = digestivesystemApp.swift; sourceTree = "<group>"; };
 		42AEF42327927B3B0022B87F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				42D5FE7327BE87F3002BD73C /* DailySummary.swift */,
 				42F9FD6F27C295800035C8DE /* TrackFood.swift */,
 				427424A827C53EB60065B8D1 /* TrackStool.swift */,
+				426CC88327C59B6600FEF881 /* Calendar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				427424A927C53EB60065B8D1 /* TrackStool.swift in Sources */,
 				42F9FD7027C295800035C8DE /* TrackFood.swift in Sources */,
 				42F9FD7227C3C10F0035C8DE /* CheckBoxView.swift in Sources */,
+				426CC88427C59B6600FEF881 /* Calendar.swift in Sources */,
 				42AEF43427927B3E0022B87F /* ContentView.swift in Sources */,
 				42D5FE7027BE8155002BD73C /* Home.swift in Sources */,
 				42D5FE7427BE87F3002BD73C /* DailySummary.swift in Sources */,

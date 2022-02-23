@@ -13,7 +13,40 @@ struct TrackStool: View {
             UITextView.appearance().backgroundColor = .clear
         }
     
+    // Date, time, and duration selection variables
+    @State var date = Date()
+    @State var duration = 0
+    
+    // Color selection variables
+    @State var brown = false
+    @State var orange = false
+    @State var yellow = false
+    @State var green = false
+    @State var booger = false
+    
+    // Sets all color selection variables to false
+    func negate() -> Void {
+        brown = false
+        orange = false
+        yellow = false
+        green = false
+        booger = false
+    }
+    
+    // Texture selection variables
+    @State var smooth = false
+    @State var soft = false
+    @State var watery = false
+    @State var sticky = false
+    @State var fluffy = false
+    @State var lumpy = false
+    @State var mushy = false
+    
+    // Notes text variable
+    @State var notes = ""
+    
     var body: some View {
+        
         VStack {
             
             Text("Track Stool")
@@ -26,28 +59,28 @@ struct TrackStool: View {
                 .padding(.top)
             
             HStack {
-                DatePicker(selection: /*@START_MENU_TOKEN@*/.constant(Date())/*@END_MENU_TOKEN@*/, label: {  })
+                DatePicker(selection: $date, label: {  })
                     .labelsHidden()
                     
-                
-                Picker(selection: .constant(0), label: Text("")) {
+                Picker("", selection: $duration) {
                     Text("").tag(0)
-                    Text("5").tag(1)
-                    Text("15").tag(2)
-                    Text("30").tag(3)
-                    Text("45").tag(4)
-                    Text("60").tag(5)
-                    Text("75").tag(6)
+                    Text("5").tag(5)
+                    Text("15").tag(15)
+                    Text("30").tag(30)
+                    Text("45").tag(45)
+                    Text("60").tag(60)
+                    Text("75").tag(75)
                 }
-                .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                
+                .accentColor(Color.black)
+                .overlay(RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.black, lineWidth: 2))
                 
                 Text("min")
             }
             .padding(.vertical)
             .frame(maxWidth: .infinity)
             .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
-            .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
+            .background(Color.accentColor)
             .cornerRadius(12)
             .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
             
@@ -75,33 +108,33 @@ struct TrackStool: View {
                     Text("Color")
                         .font(.headline)
                     
-                    Button(action: {}) {
+                    Button(action: {negate(); brown = true}) {
                         Circle()
-                            .stroke(Color.accentColor, lineWidth: 4)
+                            .stroke(brown ? Color.accentColor : Color.black, lineWidth: 4)
                             .background(Circle().foregroundColor(Color(red: 148/255.0, green: 102/255.0, blue: 53/255.0)))
                     }
                     
-                    Button(action: {}) {
+                    Button(action: {negate(); orange = true}) {
                         Circle()
-                            .stroke(Color.black, lineWidth: 4)
+                            .stroke(orange ? Color.accentColor : Color.black, lineWidth: 4)
                             .background(Circle().foregroundColor(Color(red: 203/255.0, green: 103/255.0, blue: 14/255.0)))
                     }
                 
-                    Button(action: {}) {
+                    Button(action: {negate(); yellow = true}) {
                         Circle()
-                            .stroke(Color.black, lineWidth: 4)
+                            .stroke(yellow ? Color.accentColor : Color.black, lineWidth: 4)
                             .background(Circle().foregroundColor(Color(red: 241/255.0, green: 196/255.0, blue: 15/255.0)))
                     }
                     
-                    Button(action: {}) {
+                    Button(action: {negate(); green = true}) {
                         Circle()
-                            .stroke(Color.black, lineWidth: 4)
+                            .stroke(green ? Color.accentColor : Color.black, lineWidth: 4)
                             .background(Circle().foregroundColor(Color(red: 50/255.0, green: 100/255.0, blue: 40/255.0)))
                     }
                     
-                    Button(action: {}) {
+                    Button(action: {negate(); booger = true}) {
                         Circle()
-                            .stroke(Color.black, lineWidth: 4)
+                            .stroke(booger ? Color.accentColor : Color.black, lineWidth: 4)
                             .background(Circle().foregroundColor(Color(red: 81/255.0, green: 92/255.0, blue: 15/255.0)))
                     }
                 }
@@ -113,75 +146,77 @@ struct TrackStool: View {
                     
                     Spacer()
                     
-                    Button(action: {}) {
+                    Button(action: {smooth = !smooth}) {
                         Text("Smooth")
                             .foregroundColor(Color.black)
                             .padding(.all)
+                            .overlay(RoundedRectangle(cornerRadius: 12)
+                                        .stroke(smooth ? Color.accentColor : Color.black, lineWidth: 2))
                     }
-                    .background(Color.accentColor)
+                    .background(smooth ? Color.accentColor : Color.white)
                     .cornerRadius(12)
                     
-                    Button(action: {}) {
+                    Button(action: {soft = !soft}) {
                         Text("Soft")
                             .foregroundColor(Color.black)
                             .padding(.all)
                             .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color.black, lineWidth: 2))
+                                        .stroke(soft ? Color.accentColor : Color.black, lineWidth: 2))
                     }
-                    .background(Color.white)
+                    .background(soft ? Color.accentColor : Color.white)
                     .cornerRadius(12)
                     
-                    Button(action: {}) {
+                    Button(action: {watery = !watery}) {
                         Text("Watery")
                             .foregroundColor(Color.black)
                             .padding(.all)
                             .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color.black, lineWidth: 2))
+                                        .stroke(watery ? Color.accentColor : Color.black, lineWidth: 2))
                     }
-                    .background(Color.white)
+                    .background(watery ? Color.accentColor : Color.white)
                     .cornerRadius(12)
                 }
                 
                 HStack {
                     
-                    Button(action: {}) {
+                    Button(action: {sticky = !sticky}) {
                         Text("Sticky")
                             .foregroundColor(Color.black)
                             .padding(.all)
                             .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color.black, lineWidth: 2))
+                                        .stroke(sticky ? Color.accentColor : Color.black, lineWidth: 2))
                     }
-                    .background(Color.white)
+                    .background(sticky ? Color.accentColor : Color.white)
                     .cornerRadius(12)
                     
-                    Button(action: {}) {
+                    Button(action: {fluffy = !fluffy}) {
                         Text("Fluffy")
                             .foregroundColor(Color.black)
                             .padding(.all)
                             .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color.black, lineWidth: 2))
+                                        .stroke(fluffy ? Color.accentColor : Color.black, lineWidth: 2))
                     }
-                    .background(Color.white)
+                    .background(fluffy ? Color.accentColor : Color.white)
                     .cornerRadius(12)
                     
-                    Button(action: {}) {
+                    Button(action: {lumpy = !lumpy}) {
                         Text("Lumpy")
                             .foregroundColor(Color.black)
                             .padding(.all)
                             .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color.black, lineWidth: 2))
+                                        .stroke(lumpy ? Color.accentColor : Color.black, lineWidth: 2))
                     }
-                    .background(Color.white)
+                    .background(lumpy ? Color.accentColor : Color.white)
                     .cornerRadius(12)
                     
-                    Button(action: {}) {
+                    Button(action: {mushy = !mushy}) {
                         Text("Mushy")
                             .foregroundColor(Color.black)
                             .padding(.all)
                             .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color.black, lineWidth: 2))
+                                        .stroke(mushy ? Color.accentColor : Color.black, lineWidth: 2))
                     }
-                    .background(Color.white)
+                    .background(mushy ? Color.accentColor : Color.white)
                     .cornerRadius(12)
                 }
                 
@@ -190,7 +225,7 @@ struct TrackStool: View {
             Text("Notes")
                 .font(.headline)
               
-            TextEditor(text: .constant("Default text"))
+            TextEditor(text: $notes)
                 .padding(.all)
                 .frame(maxWidth: .infinity)
                 .frame(maxHeight: 75)
