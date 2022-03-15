@@ -15,6 +15,8 @@ struct TrackStool: View {
     
     @State var stoolEntry = StoolEntry()
     
+    let durations = [0, 5, 15, 30, 45, 60, 75]
+    
     // Sets all color selection variables to false
     func negate() -> Void {
         stoolEntry.brown = false
@@ -42,14 +44,8 @@ struct TrackStool: View {
                 DatePicker(selection: $stoolEntry.date, label: {  })
                     .labelsHidden()
                     
-                Picker("", selection: $stoolEntry.duration) {
-                    Text("").tag(0)
-                    Text("5").tag(5)
-                    Text("15").tag(15)
-                    Text("30").tag(30)
-                    Text("45").tag(45)
-                    Text("60").tag(60)
-                    Text("75").tag(75)
+                Picker("", selection: ($stoolEntry.duration)) {
+                    ForEach(durations, id: \.self) { Text(String($0)) }
                 }
                 .accentColor(Color.black)
                 .overlay(RoundedRectangle(cornerRadius: 10)

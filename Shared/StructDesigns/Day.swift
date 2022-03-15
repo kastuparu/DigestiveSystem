@@ -11,10 +11,16 @@ struct Day {
     
     var date = Date()
     
-    var sleep = 0
-    var hydration = 0
-    var exercise = 0
-    var stress = 0
+    func dateString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM dd, yyyy"
+        return dateFormatter.string(from : date)
+    }
+    
+    var sleep = ""
+    var hydration = ""
+    var exercise = ""
+    var stress = ""
     
     var notes = ""
     

@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct Home: View {
+    
+    @State var day = Day()
+    
     var body: some View {
         VStack {
             
@@ -22,7 +25,7 @@ struct Home: View {
                     
                 VStack {
                         
-                    Text("February 26, 2022")
+                    Text(day.dateString())
                         .font(.largeTitle)
                         .multilineTextAlignment(.leading)
                         

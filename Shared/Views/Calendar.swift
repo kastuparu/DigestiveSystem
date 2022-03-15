@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct Calendar: View {
+    
+    @State var day = Day()
+    
     var body: some View {
         
         VStack {

@@ -13,6 +13,12 @@ struct DailySummary: View {
             UITextView.appearance().backgroundColor = .clear
         }
     
+    @State var day = Day()
+    
+    let sleepOptions = ["", "0-2 hours", "3-4 hours", "5-6 hours", "7-8 hours", "9+ hours"]
+    let hydrationOptions = ["", "0-2 cups", "3-4 cups", "5-6 cups", "7-8 cups", "9+ cups"]
+    let exerciseStressOptions = ["", "none", "less", "average", "more", "excessive"]
+    
     var body: some View {
         VStack {
             ScrollView {
@@ -20,7 +26,7 @@ struct DailySummary: View {
                     Text("Daily Summary")
                         .font(.title)
                     
-                    Text("February 26, 2022")
+                    Text(day.dateString())
                         .font(.subheadline)
                     
                     HStack {
@@ -67,91 +73,69 @@ struct DailySummary: View {
                         
                         VStack {
                             Text("Sleep")
-                            HStack {
-                                
-                                Menu("") {
-                                    Text("0-2")
-                                    Text("3-4")
-                                    Text("5-6")
-                                    Text("7-8")
-                                    Text("9+")
-                                }
-                                .padding(.vertical)
-                                .frame(maxWidth: .infinity)
-                                .foregroundColor(Color.black)
-                                .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
-                                .cornerRadius(12)
-                                .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
-                                
-                                Text("hrs.")
+                            
+                            Picker("", selection: ($day.sleep)) {
+                                ForEach(sleepOptions, id: \.self) { Text($0) }
                             }
+                            .accentColor(Color.black)
+                            .padding(.vertical)
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(Color.black)
+                            .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
+                            .cornerRadius(12)
+                            .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
                         }
                         
                         VStack {
                             Text("Hydration")
-                            HStack {
-                                
-                                Menu("") {
-                                    Text("0-2")
-                                    Text("3-4")
-                                    Text("5-6")
-                                    Text("7-8")
-                                    Text("9+")
-                                }
-                                .padding(.vertical)
-                                .frame(maxWidth: .infinity)
-                                .foregroundColor(Color.black)
-                                .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
-                                .cornerRadius(12)
-                                .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
-                                
-                                Text("cups")
+                            
+                            Picker("", selection: ($day.hydration)) {
+                                ForEach(hydrationOptions, id: \.self) { Text($0) }
                             }
+                            .accentColor(Color.black)
+                            .padding(.vertical)
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(Color.black)
+                            .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
+                            .cornerRadius(12)
+                            .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
                         }
                         
                         VStack {
                             Text("Exercise")
                                 
-                            Menu("") {
-                                Text("none")
-                                Text("less")
-                                Text("average")
-                                Text("more")
-                                Text("excessive")
+                            Picker("", selection: ($day.exercise)) {
+                                ForEach(exerciseStressOptions, id: \.self) { Text($0) }
                             }
+                            .accentColor(Color.black)
                             .padding(.vertical)
                             .frame(maxWidth: .infinity)
                             .foregroundColor(Color.black)
                             .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
                             .cornerRadius(12)
                             .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
-                             
                         }
                         
                         VStack {
                             Text("Stress")
                                 
-                            Menu("") {
-                                Text("none")
-                                Text("less")
-                                Text("average")
-                                Text("more")
-                                Text("excessive")
+                            Picker("", selection: ($day.stress)) {
+                                ForEach(exerciseStressOptions, id: \.self) { Text($0) }
                             }
+                            .accentColor(Color.black)
                             .padding(.vertical)
                             .frame(maxWidth: .infinity)
                             .foregroundColor(Color.black)
                             .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
                             .cornerRadius(12)
                             .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
-                             
                         }
                     }
                     
                     Spacer(minLength: 25)
                     
                     Text("Notes (include alcohol, drugs, and caffeine)")
-                    TextEditor(text: .constant("Default text"))
+                    TextEditor(text: $day.notes)
                         .padding(.all)
                         .frame(maxWidth: .infinity)
                         .frame(maxHeight: 150)

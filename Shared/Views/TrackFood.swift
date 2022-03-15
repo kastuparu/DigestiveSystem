@@ -11,6 +11,8 @@ struct TrackFood: View {
     
     @State var foodEntry = FoodEntry()
     
+    let durations = [0, 5, 15, 30, 45, 60, 75]
+    
     init() {
             UITextView.appearance().backgroundColor = .clear
         }
@@ -28,21 +30,15 @@ struct TrackFood: View {
                 .padding(.top)
             
             HStack {
-                DatePicker(selection: /*@START_MENU_TOKEN@*/.constant(Date())/*@END_MENU_TOKEN@*/, label: {  })
+                DatePicker(selection: $foodEntry.date, label: {  })
                     .labelsHidden()
-                    
                 
-                Picker(selection: .constant(0), label: Text("")) {
-                    Text("").tag(0)
-                    Text("5").tag(1)
-                    Text("15").tag(2)
-                    Text("30").tag(3)
-                    Text("45").tag(4)
-                    Text("60").tag(5)
-                    Text("75").tag(6)
+                Picker("", selection: ($foodEntry.duration)) {
+                    ForEach(durations, id: \.self) { Text(String($0)) }
                 }
-                .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                
+                .accentColor(Color.black)
+                .overlay(RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.black, lineWidth: 2))
                 
                 Text("min")
             }
@@ -52,8 +48,8 @@ struct TrackFood: View {
             .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
             .cornerRadius(12)
             .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
-            
-            Text("How big was the meal?")
+
+            Text(String("How big was the meal?"))
                 .font(.headline)
                 .padding(.top)
             
