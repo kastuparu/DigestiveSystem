@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TrackFood: View {
     
-    @State private var checked = true
+    @State var foodEntry = FoodEntry()
     
     init() {
             UITextView.appearance().backgroundColor = .clear
@@ -83,9 +83,9 @@ struct TrackFood: View {
                 Spacer()
                 
                 VStack {
-                    CheckBoxView(checked: $checked)
-                    CheckBoxView(checked: $checked)
-                    CheckBoxView(checked: $checked)
+                    CheckBoxView(checked: $foodEntry.probiotics)
+                    CheckBoxView(checked: $foodEntry.collagens)
+                    CheckBoxView(checked: $foodEntry.garliconion)
                 }
                 
                 VStack {
@@ -97,9 +97,9 @@ struct TrackFood: View {
                 Spacer()
                 
                 VStack {
-                    CheckBoxView(checked: $checked)
-                    CheckBoxView(checked: $checked)
-                    CheckBoxView(checked: $checked)
+                    CheckBoxView(checked: $foodEntry.processed)
+                    CheckBoxView(checked: $foodEntry.spicy)
+                    CheckBoxView(checked: $foodEntry.highsugar)
                 }
                 
                 VStack {
@@ -116,7 +116,7 @@ struct TrackFood: View {
             Text("Notes")
                 .font(.headline)
               
-            TextEditor(text: .constant("Default text"))
+            TextEditor(text: $foodEntry.notes)
                 .padding(.all)
                 .frame(maxWidth: .infinity)
                 .frame(maxHeight: 75)

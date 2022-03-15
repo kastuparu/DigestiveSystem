@@ -13,37 +13,17 @@ struct TrackStool: View {
             UITextView.appearance().backgroundColor = .clear
         }
     
-    // Date, time, and duration selection variables
-    @State var date = Date()
-    @State var duration = 0
-    
-    // Color selection variables
-    @State var brown = false
-    @State var orange = false
-    @State var yellow = false
-    @State var green = false
-    @State var booger = false
+    @State var stoolEntry = StoolEntry()
     
     // Sets all color selection variables to false
     func negate() -> Void {
-        brown = false
-        orange = false
-        yellow = false
-        green = false
-        booger = false
+        stoolEntry.brown = false
+        stoolEntry.orange = false
+        stoolEntry.yellow = false
+        stoolEntry.green = false
+        stoolEntry.booger = false
     }
     
-    // Texture selection variables
-    @State var smooth = false
-    @State var soft = false
-    @State var watery = false
-    @State var sticky = false
-    @State var fluffy = false
-    @State var lumpy = false
-    @State var mushy = false
-    
-    // Notes text variable
-    @State var notes = ""
     
     var body: some View {
         
@@ -59,10 +39,10 @@ struct TrackStool: View {
                 .padding(.top)
             
             HStack {
-                DatePicker(selection: $date, label: {  })
+                DatePicker(selection: $stoolEntry.date, label: {  })
                     .labelsHidden()
                     
-                Picker("", selection: $duration) {
+                Picker("", selection: $stoolEntry.duration) {
                     Text("").tag(0)
                     Text("5").tag(5)
                     Text("15").tag(15)
@@ -108,33 +88,33 @@ struct TrackStool: View {
                     Text("Color")
                         .font(.headline)
                     
-                    Button(action: {negate(); brown = true}) {
+                    Button(action: {negate(); stoolEntry.brown = true}) {
                         Circle()
-                            .stroke(brown ? Color.accentColor : Color.black, lineWidth: 4)
+                            .stroke(stoolEntry.brown ? Color.accentColor : Color.black, lineWidth: 4)
                             .background(Circle().foregroundColor(Color(red: 148/255.0, green: 102/255.0, blue: 53/255.0)))
                     }
                     
-                    Button(action: {negate(); orange = true}) {
+                    Button(action: {negate(); stoolEntry.orange = true}) {
                         Circle()
-                            .stroke(orange ? Color.accentColor : Color.black, lineWidth: 4)
+                            .stroke(stoolEntry.orange ? Color.accentColor : Color.black, lineWidth: 4)
                             .background(Circle().foregroundColor(Color(red: 203/255.0, green: 103/255.0, blue: 14/255.0)))
                     }
                 
-                    Button(action: {negate(); yellow = true}) {
+                    Button(action: {negate(); stoolEntry.yellow = true}) {
                         Circle()
-                            .stroke(yellow ? Color.accentColor : Color.black, lineWidth: 4)
+                            .stroke(stoolEntry.yellow ? Color.accentColor : Color.black, lineWidth: 4)
                             .background(Circle().foregroundColor(Color(red: 241/255.0, green: 196/255.0, blue: 15/255.0)))
                     }
                     
-                    Button(action: {negate(); green = true}) {
+                    Button(action: {negate(); stoolEntry.green = true}) {
                         Circle()
-                            .stroke(green ? Color.accentColor : Color.black, lineWidth: 4)
+                            .stroke(stoolEntry.green ? Color.accentColor : Color.black, lineWidth: 4)
                             .background(Circle().foregroundColor(Color(red: 50/255.0, green: 100/255.0, blue: 40/255.0)))
                     }
                     
-                    Button(action: {negate(); booger = true}) {
+                    Button(action: {negate(); stoolEntry.booger = true}) {
                         Circle()
-                            .stroke(booger ? Color.accentColor : Color.black, lineWidth: 4)
+                            .stroke(stoolEntry.booger ? Color.accentColor : Color.black, lineWidth: 4)
                             .background(Circle().foregroundColor(Color(red: 81/255.0, green: 92/255.0, blue: 15/255.0)))
                     }
                 }
@@ -146,77 +126,77 @@ struct TrackStool: View {
                     
                     Spacer()
                     
-                    Button(action: {smooth = !smooth}) {
+                    Button(action: {stoolEntry.smooth = !stoolEntry.smooth}) {
                         Text("Smooth")
                             .foregroundColor(Color.black)
                             .padding(.all)
                             .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(smooth ? Color.accentColor : Color.black, lineWidth: 2))
+                                        .stroke(stoolEntry.smooth ? Color.accentColor : Color.black, lineWidth: 2))
                     }
-                    .background(smooth ? Color.accentColor : Color.white)
+                    .background(stoolEntry.smooth ? Color.accentColor : Color.white)
                     .cornerRadius(12)
                     
-                    Button(action: {soft = !soft}) {
+                    Button(action: {stoolEntry.soft = !stoolEntry.soft}) {
                         Text("Soft")
                             .foregroundColor(Color.black)
                             .padding(.all)
                             .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(soft ? Color.accentColor : Color.black, lineWidth: 2))
+                                        .stroke(stoolEntry.soft ? Color.accentColor : Color.black, lineWidth: 2))
                     }
-                    .background(soft ? Color.accentColor : Color.white)
+                    .background(stoolEntry.soft ? Color.accentColor : Color.white)
                     .cornerRadius(12)
                     
-                    Button(action: {watery = !watery}) {
+                    Button(action: {stoolEntry.watery = !stoolEntry.watery}) {
                         Text("Watery")
                             .foregroundColor(Color.black)
                             .padding(.all)
                             .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(watery ? Color.accentColor : Color.black, lineWidth: 2))
+                                        .stroke(stoolEntry.watery ? Color.accentColor : Color.black, lineWidth: 2))
                     }
-                    .background(watery ? Color.accentColor : Color.white)
+                    .background(stoolEntry.watery ? Color.accentColor : Color.white)
                     .cornerRadius(12)
                 }
                 
                 HStack {
                     
-                    Button(action: {sticky = !sticky}) {
+                    Button(action: {stoolEntry.sticky = !stoolEntry.sticky}) {
                         Text("Sticky")
                             .foregroundColor(Color.black)
                             .padding(.all)
                             .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(sticky ? Color.accentColor : Color.black, lineWidth: 2))
+                                        .stroke(stoolEntry.sticky ? Color.accentColor : Color.black, lineWidth: 2))
                     }
-                    .background(sticky ? Color.accentColor : Color.white)
+                    .background(stoolEntry.sticky ? Color.accentColor : Color.white)
                     .cornerRadius(12)
                     
-                    Button(action: {fluffy = !fluffy}) {
+                    Button(action: {stoolEntry.fluffy = !stoolEntry.fluffy}) {
                         Text("Fluffy")
                             .foregroundColor(Color.black)
                             .padding(.all)
                             .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(fluffy ? Color.accentColor : Color.black, lineWidth: 2))
+                                        .stroke(stoolEntry.fluffy ? Color.accentColor : Color.black, lineWidth: 2))
                     }
-                    .background(fluffy ? Color.accentColor : Color.white)
+                    .background(stoolEntry.fluffy ? Color.accentColor : Color.white)
                     .cornerRadius(12)
                     
-                    Button(action: {lumpy = !lumpy}) {
+                    Button(action: {stoolEntry.lumpy = !stoolEntry.lumpy}) {
                         Text("Lumpy")
                             .foregroundColor(Color.black)
                             .padding(.all)
                             .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(lumpy ? Color.accentColor : Color.black, lineWidth: 2))
+                                        .stroke(stoolEntry.lumpy ? Color.accentColor : Color.black, lineWidth: 2))
                     }
-                    .background(lumpy ? Color.accentColor : Color.white)
+                    .background(stoolEntry.lumpy ? Color.accentColor : Color.white)
                     .cornerRadius(12)
                     
-                    Button(action: {mushy = !mushy}) {
+                    Button(action: {stoolEntry.mushy = !stoolEntry.mushy}) {
                         Text("Mushy")
                             .foregroundColor(Color.black)
                             .padding(.all)
                             .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(mushy ? Color.accentColor : Color.black, lineWidth: 2))
+                                        .stroke(stoolEntry.mushy ? Color.accentColor : Color.black, lineWidth: 2))
                     }
-                    .background(mushy ? Color.accentColor : Color.white)
+                    .background(stoolEntry.mushy ? Color.accentColor : Color.white)
                     .cornerRadius(12)
                 }
                 
@@ -225,7 +205,7 @@ struct TrackStool: View {
             Text("Notes")
                 .font(.headline)
               
-            TextEditor(text: $notes)
+            TextEditor(text: $stoolEntry.notes)
                 .padding(.all)
                 .frame(maxWidth: .infinity)
                 .frame(maxHeight: 75)

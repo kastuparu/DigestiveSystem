@@ -15,6 +15,10 @@
 		42AEF43527927B3E0022B87F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AEF42327927B3B0022B87F /* ContentView.swift */; };
 		42AEF43627927B3E0022B87F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42AEF42427927B3E0022B87F /* Assets.xcassets */; };
 		42AEF43727927B3E0022B87F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42AEF42427927B3E0022B87F /* Assets.xcassets */; };
+		42D27EAA27E0BF6C00B4C804 /* FoodEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D27EA927E0BF6C00B4C804 /* FoodEntry.swift */; };
+		42D27EAB27E0BF6C00B4C804 /* FoodEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D27EA927E0BF6C00B4C804 /* FoodEntry.swift */; };
+		42D27EAD27E0C15700B4C804 /* StoolEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D27EAC27E0C15700B4C804 /* StoolEntry.swift */; };
+		42D27EAE27E0C15700B4C804 /* StoolEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D27EAC27E0C15700B4C804 /* StoolEntry.swift */; };
 		42D5FE7027BE8155002BD73C /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D5FE6F27BE8155002BD73C /* Home.swift */; };
 		42D5FE7427BE87F3002BD73C /* DailySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D5FE7327BE87F3002BD73C /* DailySummary.swift */; };
 		42F9FD7027C295800035C8DE /* TrackFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9FD6F27C295800035C8DE /* TrackFood.swift */; };
@@ -30,6 +34,8 @@
 		42AEF42927927B3E0022B87F /* digestivesystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = digestivesystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42AEF42F27927B3E0022B87F /* digestivesystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = digestivesystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42AEF43127927B3E0022B87F /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		42D27EA927E0BF6C00B4C804 /* FoodEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodEntry.swift; sourceTree = "<group>"; };
+		42D27EAC27E0C15700B4C804 /* StoolEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoolEntry.swift; sourceTree = "<group>"; };
 		42D5FE6F27BE8155002BD73C /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		42D5FE7327BE87F3002BD73C /* DailySummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailySummary.swift; sourceTree = "<group>"; };
 		42F9FD6F27C295800035C8DE /* TrackFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFood.swift; sourceTree = "<group>"; };
@@ -74,6 +80,7 @@
 		42AEF42127927B3B0022B87F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				42D27EAF27E0C33500B4C804 /* StructDesigns */,
 				427424A727C53E560065B8D1 /* ViewParts */,
 				42D5FE6C27BE80A9002BD73C /* Views */,
 				42AEF42227927B3B0022B87F /* digestivesystemApp.swift */,
@@ -98,6 +105,15 @@
 				42AEF43127927B3E0022B87F /* macOS.entitlements */,
 			);
 			path = macOS;
+			sourceTree = "<group>";
+		};
+		42D27EAF27E0C33500B4C804 /* StructDesigns */ = {
+			isa = PBXGroup;
+			children = (
+				42D27EAC27E0C15700B4C804 /* StoolEntry.swift */,
+				42D27EA927E0BF6C00B4C804 /* FoodEntry.swift */,
+			);
+			path = StructDesigns;
 			sourceTree = "<group>";
 		};
 		42D5FE6C27BE80A9002BD73C /* Views */ = {
@@ -212,11 +228,13 @@
 			files = (
 				427424A927C53EB60065B8D1 /* TrackStool.swift in Sources */,
 				42F9FD7027C295800035C8DE /* TrackFood.swift in Sources */,
+				42D27EAD27E0C15700B4C804 /* StoolEntry.swift in Sources */,
 				42F9FD7227C3C10F0035C8DE /* CheckBoxView.swift in Sources */,
 				426CC88427C59B6600FEF881 /* Calendar.swift in Sources */,
 				42AEF43427927B3E0022B87F /* ContentView.swift in Sources */,
 				42D5FE7027BE8155002BD73C /* Home.swift in Sources */,
 				42D5FE7427BE87F3002BD73C /* DailySummary.swift in Sources */,
+				42D27EAA27E0BF6C00B4C804 /* FoodEntry.swift in Sources */,
 				42AEF43227927B3E0022B87F /* digestivesystemApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -226,6 +244,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				42AEF43527927B3E0022B87F /* ContentView.swift in Sources */,
+				42D27EAB27E0BF6C00B4C804 /* FoodEntry.swift in Sources */,
+				42D27EAE27E0C15700B4C804 /* StoolEntry.swift in Sources */,
 				42AEF43327927B3E0022B87F /* digestivesystemApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
