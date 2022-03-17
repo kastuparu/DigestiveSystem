@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Calendar: View {
     
-    @State var day = Day()
+    @State private var day = Day()
     
     var body: some View {
         

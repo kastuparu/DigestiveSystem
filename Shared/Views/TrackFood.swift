@@ -15,6 +15,8 @@ struct TrackFood: View {
     
     let percentPicker = ["0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]
     
+    @State private var isEditing = false
+    
     init() {
             UITextView.appearance().backgroundColor = .clear
         }
@@ -27,10 +29,6 @@ struct TrackFood: View {
                 .foregroundColor(Color.black)
                 .multilineTextAlignment(.center)
             
-            Text("Date, time, and duration")
-                .font(.headline)
-                .padding(.top)
-            
             HStack {
                 DatePicker(selection: $foodEntry.date, label: {  })
                     .labelsHidden()
@@ -39,7 +37,7 @@ struct TrackFood: View {
                     ForEach(durations, id: \.self) { Text(String($0)) }
                 }
                 .accentColor(Color.black)
-                .padding(4)
+                .padding(3)
                 .overlay(RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.black, lineWidth: 2))
                 
@@ -51,19 +49,32 @@ struct TrackFood: View {
             .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
             .cornerRadius(12)
             .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
-
-            Text("How big was the meal?")
-                .font(.headline)
-                .padding(.top)
             
-            Slider(value: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant(10)/*@END_MENU_TOKEN@*/)
-                // Follow this tutorial later: https://codewithchris.com/uislider-tutorial-ios-slider/
+            VStack {
+
+                Text("How big was the meal?")
+                    .font(.headline)
+                    .padding(.top)
+                
+                Slider(value: $foodEntry.size, in: 0...2, step: 0.25,
+                       onEditingChanged: {editing in isEditing = editing})
+                
+                HStack {
+                    Text("0.0x")
+                    Spacer()
+                    Text("0.5x")
+                    Spacer()
+                    Text("1.0x")
+                    Spacer()
+                    Text("1.5x")
+                    Spacer()
+                    Text("2.0x")
+                }
+            }
             
             HStack {
                 
                 ZStack {
-                    
-                    // NOTE TO FUTURE SELF (03/17 09:51): add pickers to pie chart, add dairy, add red message
                     
                     Circle()
                         .stroke(Color.accentColor, lineWidth: 5)
@@ -112,7 +123,7 @@ struct TrackFood: View {
                                 ForEach(percentPicker, id: \.self) { Text($0) }
                             }
                             .accentColor(Color.black)
-                            .padding(4)
+                            .padding(3)
                             .overlay(RoundedRectangle(cornerRadius: 10)
                                         .stroke(Color.black, lineWidth: 2))
                             

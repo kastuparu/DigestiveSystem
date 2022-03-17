@@ -13,7 +13,7 @@ struct DailySummary: View {
             UITextView.appearance().backgroundColor = .clear
         }
     
-    @State var day = Day()
+    @State private var day = Day()
     
     let sleepOptions = ["", "0-2 hours", "3-4 hours", "5-6 hours", "7-8 hours", "9+ hours"]
     let hydrationOptions = ["", "0-2 cups", "3-4 cups", "5-6 cups", "7-8 cups", "9+ cups"]

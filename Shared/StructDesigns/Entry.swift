@@ -26,7 +26,7 @@ struct FoodEntry {
     
     var date = Date()
     var duration = 0
-    var size = 0
+    var size = 1.0
     var notes = ""
     
     var probiotics = false
@@ -56,8 +56,8 @@ struct StoolEntry {
     
     var date = Date()
     var duration = 0
-    var size = 0
-    var difficulty = 0
+    var size = 1.0
+    var difficulty = 1.0
     var notes = ""
     
     var brown = false

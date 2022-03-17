@@ -64,7 +64,7 @@ struct PieSlicePickerView: View {
                         ForEach(pieSliceData.percentPicker, id: \.self) { Text($0) }
                     }
                     .accentColor(Color.black)
-                    .padding(4)
+                    .padding(3)
                     .overlay(RoundedRectangle(cornerRadius: 10)
                                 .stroke(Color.black, lineWidth: 2))
                     

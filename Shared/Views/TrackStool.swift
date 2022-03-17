@@ -13,9 +13,12 @@ struct TrackStool: View {
             UITextView.appearance().backgroundColor = .clear
         }
     
-    @State var stoolEntry = StoolEntry()
+    @State private var stoolEntry = StoolEntry()
     
     let durations = [0, 5, 15, 30, 45, 60, 75]
+    
+    @State private var isEditing1 = false
+    @State private var isEditing2 = false
     
     // Sets all color selection variables to false
     func negate() -> Void {
@@ -36,10 +39,6 @@ struct TrackStool: View {
                 .foregroundColor(Color.black)
                 .multilineTextAlignment(.center)
             
-            Text("Date, time, and duration")
-                .font(.headline)
-                .padding(.top)
-            
             HStack {
                 DatePicker(selection: $stoolEntry.date, label: {  })
                     .labelsHidden()
@@ -48,7 +47,7 @@ struct TrackStool: View {
                     ForEach(durations, id: \.self) { Text(String($0)) }
                 }
                 .accentColor(Color.black)
-                .padding(4)
+                .padding(3)
                 .overlay(RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.black, lineWidth: 2))
                 
@@ -67,15 +66,39 @@ struct TrackStool: View {
                     .font(.headline)
                     .padding(.top)
                 
-                Slider(value: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant(10)/*@END_MENU_TOKEN@*/)
-                    // Follow this tutorial later: https://codewithchris.com/uislider-tutorial-ios-slider/
+                Slider(value: $stoolEntry.size, in: 0...2, step: 0.25,
+                       onEditingChanged: {editing in isEditing1 = editing})
+                
+                HStack {
+                    Text("0.0x")
+                    Spacer()
+                    Text("0.5x")
+                    Spacer()
+                    Text("1.0x")
+                    Spacer()
+                    Text("1.5x")
+                    Spacer()
+                    Text("2.0x")
+                }
                 
                 Text("How hard to pass was it?")
                     .font(.headline)
                     .padding(.top)
                 
-                Slider(value: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant(10)/*@END_MENU_TOKEN@*/)
-                    // Follow this tutorial later: https://codewithchris.com/uislider-tutorial-ios-slider/
+                Slider(value: $stoolEntry.difficulty, in: 0...2, step: 0.25,
+                       onEditingChanged: {editing in isEditing2 = editing})
+                
+                HStack {
+                    Text("0.0x")
+                    Spacer()
+                    Text("0.5x")
+                    Spacer()
+                    Text("1.0x")
+                    Spacer()
+                    Text("1.5x")
+                    Spacer()
+                    Text("2.0x")
+                }
             }
             
             VStack {
