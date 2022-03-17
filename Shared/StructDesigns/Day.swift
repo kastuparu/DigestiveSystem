@@ -17,6 +17,12 @@ struct Day {
         return dateFormatter.string(from : date)
     }
     
+    var grains = 20.0
+    var protein = 20.0
+    var vegetables = 20.0
+    var fruits = 20.0
+    var dairy = 20.0
+    
     var sleep = ""
     var hydration = ""
     var exercise = ""

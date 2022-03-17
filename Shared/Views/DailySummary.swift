@@ -31,13 +31,61 @@ struct DailySummary: View {
                     
                     HStack {
                         
-                        Image("Home").resizable().aspectRatio(contentMode: .fit)
+                        ZStack {
+                            
+                            Circle()
+                                .stroke(Color.accentColor, lineWidth: 5)
+                            
+                            let sum = day.grains + day.protein + day.vegetables + day.fruits
+                            
+                            Text(String(day.grains / sum))
+                            
+                            if day.grains != 0 {
+                                PieSliceView(pieSliceData: PieSliceData(
+                                                startAngle: Angle(degrees: 0.0),
+                                                endAngle: Angle(degrees: day.grains / sum * 360.0),
+                                                text1: String(Int(day.grains)) + "%",
+                                                text2: "Grains"))
+                            }
+                                
+                            if day.protein != 0 {
+                                PieSliceView(pieSliceData: PieSliceData(
+                                    startAngle: Angle(degrees: day.grains / sum * 360.0),
+                                                endAngle: Angle(degrees: (day.protein + day.grains) / sum * 360.0),
+                                                text1: String(Int(day.protein)) + "%",
+                                                text2: "Protein"))
+                            }
+                             
+                            if day.vegetables != 0 {
+                                PieSliceView(pieSliceData: PieSliceData(
+                                    startAngle: Angle(degrees: (day.protein + day.grains) / sum * 360.0),
+                                                endAngle: Angle(degrees: (day.vegetables + day.protein + day.grains) / sum * 360.0),
+                                                text1: String(Int(day.vegetables)) + "%",
+                                                text2: "Vegetables"))
+                            }
+                             
+                            if day.fruits != 0 {
+                                PieSliceView(pieSliceData: PieSliceData(
+                                    startAngle: Angle(degrees: (day.vegetables + day.protein + day.grains) / sum * 360.0),
+                                                endAngle: Angle(degrees: 360.0),
+                                                text1: String(Int(day.fruits)) + "%",
+                                                text2: "Fruits"))
+                            }
+                        }
                         
                         VStack {
                             
-                            Text("You are eating less ___ than normal today")
-                                .foregroundColor(Color.red)
-                                .frame(width: 125)
+                            ZStack {
+                                Circle()
+                                    .stroke(Color.accentColor, lineWidth: 5)
+                                    .frame(width: 75, height: 75)
+                                
+                                VStack {
+                                    Text(String(day.dairy) + "%")
+                                    Text("Dairy")
+                                }
+                                .foregroundColor(Color.black)
+                            }
                             
                             Button(action: {}) {
                                 HStack {

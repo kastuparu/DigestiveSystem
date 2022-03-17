@@ -9,9 +9,11 @@ import SwiftUI
 
 struct TrackFood: View {
     
-    @State var foodEntry = FoodEntry()
+    @State private var foodEntry = FoodEntry()
     
     let durations = [0, 5, 15, 30, 45, 60, 75]
+    
+    let percentPicker = ["0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]
     
     init() {
             UITextView.appearance().backgroundColor = .clear
@@ -37,6 +39,7 @@ struct TrackFood: View {
                     ForEach(durations, id: \.self) { Text(String($0)) }
                 }
                 .accentColor(Color.black)
+                .padding(4)
                 .overlay(RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.black, lineWidth: 2))
                 
@@ -49,7 +52,7 @@ struct TrackFood: View {
             .cornerRadius(12)
             .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
 
-            Text(String("How big was the meal?"))
+            Text("How big was the meal?")
                 .font(.headline)
                 .padding(.top)
             
@@ -58,25 +61,78 @@ struct TrackFood: View {
             
             HStack {
                 
-                // Replace with food chart
-                Image("Home").resizable().aspectRatio(contentMode: .fit)
+                ZStack {
+                    
+                    // NOTE TO FUTURE SELF (03/17 09:51): add pickers to pie chart, add dairy, add red message
+                    
+                    Circle()
+                        .stroke(Color.accentColor, lineWidth: 5)
+                    
+                    PieSlicePickerView(pieSliceData: PieSlicePickerData(
+                                    startAngle: Angle(degrees: 0.0),
+                                    endAngle: Angle(degrees: 90.0),
+                                    selectedPercent: $foodEntry.grains,
+                                    text: "Grains",
+                                    percentPicker: percentPicker))
+                    
+                    PieSlicePickerView(pieSliceData: PieSlicePickerData(
+                                    startAngle: Angle(degrees: 90.0),
+                                    endAngle: Angle(degrees: 180.0),
+                                    selectedPercent: $foodEntry.protein,
+                                    text: "Protein",
+                                    percentPicker: percentPicker))
+                    
+                    PieSlicePickerView(pieSliceData: PieSlicePickerData(
+                                    startAngle: Angle(degrees: 180.0),
+                                    endAngle: Angle(degrees: 270.0),
+                                    selectedPercent: $foodEntry.vegetables,
+                                    text: "Vegetables",
+                                    percentPicker: percentPicker))
+                    
+                    PieSlicePickerView(pieSliceData: PieSlicePickerData(
+                                    startAngle: Angle(degrees: 270.0),
+                                    endAngle: Angle(degrees: 360.0),
+                                    selectedPercent: $foodEntry.fruits,
+                                    text: "Fruits",
+                                    percentPicker: percentPicker))
+                    
+                }
                 
                 Spacer()
                 
                 VStack {
                     
-                    Text("Upload image")
-                        .multilineTextAlignment(.center)
+                    ZStack {
+                        Circle()
+                            .stroke(Color.accentColor, lineWidth: 5)
+                            .frame(width: 75, height: 75)
+                        
+                        VStack {
+                            Picker("", selection: $foodEntry.dairy) {
+                                ForEach(percentPicker, id: \.self) { Text($0) }
+                            }
+                            .accentColor(Color.black)
+                            .padding(4)
+                            .overlay(RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.black, lineWidth: 2))
+                            
+                            Text("Dairy")
+                        }
+                        .foregroundColor(Color.black)
+                    }
                     
-                    Image("Upload").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
+                    Spacer()
                     
+                    if foodEntry.foodSum() != 100 {
+                        Text("doesn't add to 100%")
+                            .foregroundColor(Color.red)
+                            .multilineTextAlignment(.center)
+                    }
                 }
                 .frame(width: 100)
             }
             
             HStack {
-                
-                Spacer()
                 
                 VStack {
                     CheckBoxView(checked: $foodEntry.probiotics)
@@ -106,6 +162,9 @@ struct TrackFood: View {
                 
                 Spacer()
                 
+                Button(action: {}) {
+                    Image("Upload").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
+                }
             }
             .padding(.all)
             
@@ -153,5 +212,6 @@ struct TrackFood: View {
 struct TrackFood_Previews: PreviewProvider {
     static var previews: some View {
         TrackFood()
+.previewInterfaceOrientation(.portrait)
     }
 }

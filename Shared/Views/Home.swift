@@ -15,7 +15,6 @@ struct Home: View {
         VStack {
             
             Text("App Name")
-                .font(.title)
                 .foregroundColor(Color.black)
                 .multilineTextAlignment(.center)
             
@@ -42,10 +41,64 @@ struct Home: View {
                     
                     HStack {
                             
-                        // Replace with food chart
-                        Image("Home").resizable().aspectRatio(contentMode: .fit)
+                        ZStack {
+                            
+                            Circle()
+                                .stroke(Color.accentColor, lineWidth: 5)
+                            
+                            let sum = day.grains + day.protein + day.vegetables + day.fruits
+                            
+                            Text(String(day.grains / sum))
+                            
+                            if day.grains != 0 {
+                                PieSliceView(pieSliceData: PieSliceData(
+                                                startAngle: Angle(degrees: 0.0),
+                                                endAngle: Angle(degrees: day.grains / sum * 360.0),
+                                                text1: String(Int(day.grains)) + "%",
+                                                text2: "Grains"))
+                            }
+                                
+                            if day.protein != 0 {
+                                PieSliceView(pieSliceData: PieSliceData(
+                                    startAngle: Angle(degrees: day.grains / sum * 360.0),
+                                                endAngle: Angle(degrees: (day.protein + day.grains) / sum * 360.0),
+                                                text1: String(Int(day.protein)) + "%",
+                                                text2: "Protein"))
+                            }
+                             
+                            if day.vegetables != 0 {
+                                PieSliceView(pieSliceData: PieSliceData(
+                                    startAngle: Angle(degrees: (day.protein + day.grains) / sum * 360.0),
+                                                endAngle: Angle(degrees: (day.vegetables + day.protein + day.grains) / sum * 360.0),
+                                                text1: String(Int(day.vegetables)) + "%",
+                                                text2: "Vegetables"))
+                            }
+                             
+                            if day.fruits != 0 {
+                                PieSliceView(pieSliceData: PieSliceData(
+                                    startAngle: Angle(degrees: (day.vegetables + day.protein + day.grains) / sum * 360.0),
+                                                endAngle: Angle(degrees: 360.0),
+                                                text1: String(Int(day.fruits)) + "%",
+                                                text2: "Fruits"))
+                            }
+                            
+                        }
                         
                         VStack {
+                            
+                            ZStack {
+                                Circle()
+                                    .stroke(Color.accentColor, lineWidth: 5)
+                                    .frame(width: 75, height: 75)
+                                
+                                VStack {
+                                    Text(String(day.dairy) + "%")
+                                    Text("Dairy")
+                                }
+                                .foregroundColor(Color.black)
+                            }
+                            
+                            Spacer()
                                 
                             Text("Track today's heath habits")
                                 .foregroundColor(Color.red)
@@ -75,7 +128,6 @@ struct Home: View {
                 }
             }
             .padding(.all)
-            .frame(maxWidth: .infinity)
             .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
             .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
             .cornerRadius(12)
@@ -86,11 +138,11 @@ struct Home: View {
             Button(action: {}) {
                 HStack {
                     Image("Stool").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
+                    Spacer()
                     Text("Track Gut Conditions")
                 }
             }
             .padding(.all)
-            .frame(maxWidth: .infinity)
             .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
             .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
             .cornerRadius(12)

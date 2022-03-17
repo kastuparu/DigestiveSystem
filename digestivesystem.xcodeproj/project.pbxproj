@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		424B1C5E27E10F41008D01F3 /* PieSliceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424B1C5D27E10F41008D01F3 /* PieSliceView.swift */; };
 		426CC88427C59B6600FEF881 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426CC88327C59B6600FEF881 /* Calendar.swift */; };
 		427424A927C53EB60065B8D1 /* TrackStool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427424A827C53EB60065B8D1 /* TrackStool.swift */; };
+		4288976C27E3A2FA00CB66DD /* PieSlicePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4288976B27E3A2FA00CB66DD /* PieSlicePickerView.swift */; };
 		42AEF43227927B3E0022B87F /* digestivesystemApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AEF42227927B3B0022B87F /* digestivesystemApp.swift */; };
 		42AEF43327927B3E0022B87F /* digestivesystemApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AEF42227927B3B0022B87F /* digestivesystemApp.swift */; };
 		42AEF43427927B3E0022B87F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AEF42327927B3B0022B87F /* ContentView.swift */; };
@@ -26,8 +28,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		424B1C5D27E10F41008D01F3 /* PieSliceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSliceView.swift; sourceTree = "<group>"; };
 		426CC88327C59B6600FEF881 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		427424A827C53EB60065B8D1 /* TrackStool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackStool.swift; sourceTree = "<group>"; };
+		4288976B27E3A2FA00CB66DD /* PieSlicePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSlicePickerView.swift; sourceTree = "<group>"; };
 		42AEF42227927B3B0022B87F /* digestivesystemApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = digestivesystemApp.swift; sourceTree = "<group>"; };
 		42AEF42327927B3B0022B87F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		42AEF42427927B3E0022B87F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -64,6 +68,8 @@
 			isa = PBXGroup;
 			children = (
 				42F9FD7127C3C10F0035C8DE /* CheckBoxView.swift */,
+				424B1C5D27E10F41008D01F3 /* PieSliceView.swift */,
+				4288976B27E3A2FA00CB66DD /* PieSlicePickerView.swift */,
 			);
 			path = ViewParts;
 			sourceTree = "<group>";
@@ -228,8 +234,10 @@
 			files = (
 				427424A927C53EB60065B8D1 /* TrackStool.swift in Sources */,
 				42F9FD7027C295800035C8DE /* TrackFood.swift in Sources */,
+				4288976C27E3A2FA00CB66DD /* PieSlicePickerView.swift in Sources */,
 				42D27EAD27E0C15700B4C804 /* Entry.swift in Sources */,
 				42F9FD7227C3C10F0035C8DE /* CheckBoxView.swift in Sources */,
+				424B1C5E27E10F41008D01F3 /* PieSliceView.swift in Sources */,
 				42D27EB127E0C5CA00B4C804 /* Day.swift in Sources */,
 				426CC88427C59B6600FEF881 /* Calendar.swift in Sources */,
 				42AEF43427927B3E0022B87F /* ContentView.swift in Sources */,

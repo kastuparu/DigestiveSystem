@@ -36,6 +36,20 @@ struct FoodEntry {
     var spicy = false
     var highsugar = false
     
+    var grains = ""
+    var protein = ""
+    var vegetables = ""
+    var fruits = ""
+    var dairy = ""
+    
+    func foodToInt(food: String) -> Int {
+        return Int(food.dropLast()) ?? -1
+    }
+    
+    func foodSum() -> Int {
+        return foodToInt(food: grains) + foodToInt(food: protein) + foodToInt(food: vegetables) + foodToInt(food: fruits) + foodToInt(food: dairy)
+    }
+    
 }
 
 struct StoolEntry {

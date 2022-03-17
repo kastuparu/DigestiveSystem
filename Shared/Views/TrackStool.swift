@@ -48,6 +48,7 @@ struct TrackStool: View {
                     ForEach(durations, id: \.self) { Text(String($0)) }
                 }
                 .accentColor(Color.black)
+                .padding(4)
                 .overlay(RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.black, lineWidth: 2))
                 
