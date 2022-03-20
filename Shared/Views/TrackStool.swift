@@ -9,16 +9,17 @@ import SwiftUI
 
 struct TrackStool: View {
     
-    init() {
-            UITextView.appearance().backgroundColor = .clear
-        }
-    
-    @State private var stoolEntry = StoolEntry()
+    @Binding var stoolEntry: StoolEntry
     
     let durations = [0, 5, 15, 30, 45, 60, 75]
     
     @State private var isEditing1 = false
     @State private var isEditing2 = false
+    
+    init(stoolEntry: Binding<StoolEntry>) {
+        self._stoolEntry = stoolEntry
+        UITextView.appearance().backgroundColor = .clear
+    }
     
     // Sets all color selection variables to false
     func negate() -> Void {
@@ -28,7 +29,6 @@ struct TrackStool: View {
         stoolEntry.green = false
         stoolEntry.booger = false
     }
-    
     
     var body: some View {
         
@@ -61,7 +61,6 @@ struct TrackStool: View {
             .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
             
             VStack {
-                
                 Text("How big was it?")
                     .font(.headline)
                     .padding(.top)
@@ -80,7 +79,9 @@ struct TrackStool: View {
                     Spacer()
                     Text("2.0x")
                 }
-                
+            }
+            
+            VStack {
                 Text("How hard to pass was it?")
                     .font(.headline)
                     .padding(.top)
@@ -101,125 +102,121 @@ struct TrackStool: View {
                 }
             }
             
-            VStack {
+            HStack {
                 
-                HStack {
-                    
-                    Text("Color")
-                        .font(.headline)
-                    
-                    Button(action: {negate(); stoolEntry.brown = true}) {
-                        Circle()
-                            .stroke(stoolEntry.brown ? Color.accentColor : Color.black, lineWidth: 4)
-                            .background(Circle().foregroundColor(Color(red: 148/255.0, green: 102/255.0, blue: 53/255.0)))
-                    }
-                    
-                    Button(action: {negate(); stoolEntry.orange = true}) {
-                        Circle()
-                            .stroke(stoolEntry.orange ? Color.accentColor : Color.black, lineWidth: 4)
-                            .background(Circle().foregroundColor(Color(red: 203/255.0, green: 103/255.0, blue: 14/255.0)))
-                    }
+                Text("Color")
+                    .font(.headline)
                 
-                    Button(action: {negate(); stoolEntry.yellow = true}) {
-                        Circle()
-                            .stroke(stoolEntry.yellow ? Color.accentColor : Color.black, lineWidth: 4)
-                            .background(Circle().foregroundColor(Color(red: 241/255.0, green: 196/255.0, blue: 15/255.0)))
-                    }
-                    
-                    Button(action: {negate(); stoolEntry.green = true}) {
-                        Circle()
-                            .stroke(stoolEntry.green ? Color.accentColor : Color.black, lineWidth: 4)
-                            .background(Circle().foregroundColor(Color(red: 50/255.0, green: 100/255.0, blue: 40/255.0)))
-                    }
-                    
-                    Button(action: {negate(); stoolEntry.booger = true}) {
-                        Circle()
-                            .stroke(stoolEntry.booger ? Color.accentColor : Color.black, lineWidth: 4)
-                            .background(Circle().foregroundColor(Color(red: 81/255.0, green: 92/255.0, blue: 15/255.0)))
-                    }
+                Button(action: {negate(); stoolEntry.brown = true}) {
+                    Circle()
+                        .stroke(stoolEntry.brown ? Color.accentColor : Color.black, lineWidth: 4)
+                        .background(Circle().foregroundColor(Color(red: 148/255.0, green: 102/255.0, blue: 53/255.0)))
                 }
                 
-                HStack {
-                    
-                    Text("Texture")
-                        .font(.headline)
-                    
-                    Spacer()
-                    
-                    Button(action: {stoolEntry.smooth = !stoolEntry.smooth}) {
-                        Text("Smooth")
-                            .foregroundColor(Color.black)
-                            .padding(.all)
-                            .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(stoolEntry.smooth ? Color.accentColor : Color.black, lineWidth: 2))
-                    }
-                    .background(stoolEntry.smooth ? Color.accentColor : Color.white)
-                    .cornerRadius(12)
-                    
-                    Button(action: {stoolEntry.soft = !stoolEntry.soft}) {
-                        Text("Soft")
-                            .foregroundColor(Color.black)
-                            .padding(.all)
-                            .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(stoolEntry.soft ? Color.accentColor : Color.black, lineWidth: 2))
-                    }
-                    .background(stoolEntry.soft ? Color.accentColor : Color.white)
-                    .cornerRadius(12)
-                    
-                    Button(action: {stoolEntry.watery = !stoolEntry.watery}) {
-                        Text("Watery")
-                            .foregroundColor(Color.black)
-                            .padding(.all)
-                            .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(stoolEntry.watery ? Color.accentColor : Color.black, lineWidth: 2))
-                    }
-                    .background(stoolEntry.watery ? Color.accentColor : Color.white)
-                    .cornerRadius(12)
+                Button(action: {negate(); stoolEntry.orange = true}) {
+                    Circle()
+                        .stroke(stoolEntry.orange ? Color.accentColor : Color.black, lineWidth: 4)
+                        .background(Circle().foregroundColor(Color(red: 203/255.0, green: 103/255.0, blue: 14/255.0)))
+                }
+            
+                Button(action: {negate(); stoolEntry.yellow = true}) {
+                    Circle()
+                        .stroke(stoolEntry.yellow ? Color.accentColor : Color.black, lineWidth: 4)
+                        .background(Circle().foregroundColor(Color(red: 241/255.0, green: 196/255.0, blue: 15/255.0)))
                 }
                 
-                HStack {
-                    
-                    Button(action: {stoolEntry.sticky = !stoolEntry.sticky}) {
-                        Text("Sticky")
-                            .foregroundColor(Color.black)
-                            .padding(.all)
-                            .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(stoolEntry.sticky ? Color.accentColor : Color.black, lineWidth: 2))
-                    }
-                    .background(stoolEntry.sticky ? Color.accentColor : Color.white)
-                    .cornerRadius(12)
-                    
-                    Button(action: {stoolEntry.fluffy = !stoolEntry.fluffy}) {
-                        Text("Fluffy")
-                            .foregroundColor(Color.black)
-                            .padding(.all)
-                            .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(stoolEntry.fluffy ? Color.accentColor : Color.black, lineWidth: 2))
-                    }
-                    .background(stoolEntry.fluffy ? Color.accentColor : Color.white)
-                    .cornerRadius(12)
-                    
-                    Button(action: {stoolEntry.lumpy = !stoolEntry.lumpy}) {
-                        Text("Lumpy")
-                            .foregroundColor(Color.black)
-                            .padding(.all)
-                            .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(stoolEntry.lumpy ? Color.accentColor : Color.black, lineWidth: 2))
-                    }
-                    .background(stoolEntry.lumpy ? Color.accentColor : Color.white)
-                    .cornerRadius(12)
-                    
-                    Button(action: {stoolEntry.mushy = !stoolEntry.mushy}) {
-                        Text("Mushy")
-                            .foregroundColor(Color.black)
-                            .padding(.all)
-                            .overlay(RoundedRectangle(cornerRadius: 12)
-                                        .stroke(stoolEntry.mushy ? Color.accentColor : Color.black, lineWidth: 2))
-                    }
-                    .background(stoolEntry.mushy ? Color.accentColor : Color.white)
-                    .cornerRadius(12)
+                Button(action: {negate(); stoolEntry.green = true}) {
+                    Circle()
+                        .stroke(stoolEntry.green ? Color.accentColor : Color.black, lineWidth: 4)
+                        .background(Circle().foregroundColor(Color(red: 50/255.0, green: 100/255.0, blue: 40/255.0)))
                 }
                 
+                Button(action: {negate(); stoolEntry.booger = true}) {
+                    Circle()
+                        .stroke(stoolEntry.booger ? Color.accentColor : Color.black, lineWidth: 4)
+                        .background(Circle().foregroundColor(Color(red: 81/255.0, green: 92/255.0, blue: 15/255.0)))
+                }
+            }
+            
+            HStack {
+                
+                Text("Texture")
+                    .font(.headline)
+                
+                Spacer()
+                
+                Button(action: {stoolEntry.smooth = !stoolEntry.smooth}) {
+                    Text("Smooth")
+                        .foregroundColor(Color.black)
+                        .padding(.all)
+                        .overlay(RoundedRectangle(cornerRadius: 12)
+                                    .stroke(stoolEntry.smooth ? Color.accentColor : Color.black, lineWidth: 2))
+                }
+                .background(stoolEntry.smooth ? Color.accentColor : Color.white)
+                .cornerRadius(12)
+                
+                Button(action: {stoolEntry.soft = !stoolEntry.soft}) {
+                    Text("Soft")
+                        .foregroundColor(Color.black)
+                        .padding(.all)
+                        .overlay(RoundedRectangle(cornerRadius: 12)
+                                    .stroke(stoolEntry.soft ? Color.accentColor : Color.black, lineWidth: 2))
+                }
+                .background(stoolEntry.soft ? Color.accentColor : Color.white)
+                .cornerRadius(12)
+                
+                Button(action: {stoolEntry.watery = !stoolEntry.watery}) {
+                    Text("Watery")
+                        .foregroundColor(Color.black)
+                        .padding(.all)
+                        .overlay(RoundedRectangle(cornerRadius: 12)
+                                    .stroke(stoolEntry.watery ? Color.accentColor : Color.black, lineWidth: 2))
+                }
+                .background(stoolEntry.watery ? Color.accentColor : Color.white)
+                .cornerRadius(12)
+            }
+            
+            HStack {
+                
+                Button(action: {stoolEntry.sticky = !stoolEntry.sticky}) {
+                    Text("Sticky")
+                        .foregroundColor(Color.black)
+                        .padding(.all)
+                        .overlay(RoundedRectangle(cornerRadius: 12)
+                                    .stroke(stoolEntry.sticky ? Color.accentColor : Color.black, lineWidth: 2))
+                }
+                .background(stoolEntry.sticky ? Color.accentColor : Color.white)
+                .cornerRadius(12)
+                
+                Button(action: {stoolEntry.fluffy = !stoolEntry.fluffy}) {
+                    Text("Fluffy")
+                        .foregroundColor(Color.black)
+                        .padding(.all)
+                        .overlay(RoundedRectangle(cornerRadius: 12)
+                                    .stroke(stoolEntry.fluffy ? Color.accentColor : Color.black, lineWidth: 2))
+                }
+                .background(stoolEntry.fluffy ? Color.accentColor : Color.white)
+                .cornerRadius(12)
+                
+                Button(action: {stoolEntry.lumpy = !stoolEntry.lumpy}) {
+                    Text("Lumpy")
+                        .foregroundColor(Color.black)
+                        .padding(.all)
+                        .overlay(RoundedRectangle(cornerRadius: 12)
+                                    .stroke(stoolEntry.lumpy ? Color.accentColor : Color.black, lineWidth: 2))
+                }
+                .background(stoolEntry.lumpy ? Color.accentColor : Color.white)
+                .cornerRadius(12)
+                
+                Button(action: {stoolEntry.mushy = !stoolEntry.mushy}) {
+                    Text("Mushy")
+                        .foregroundColor(Color.black)
+                        .padding(.all)
+                        .overlay(RoundedRectangle(cornerRadius: 12)
+                                    .stroke(stoolEntry.mushy ? Color.accentColor : Color.black, lineWidth: 2))
+                }
+                .background(stoolEntry.mushy ? Color.accentColor : Color.white)
+                .cornerRadius(12)
             }
             
             Text("Notes")
@@ -233,31 +230,6 @@ struct TrackStool: View {
                 .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
                 .cornerRadius(12)
                 .font(.body)
-            
-            HStack {
-            
-                Button(action: {}) {
-                    HStack {
-                        
-                        Image("Cancel").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
-                        
-                        Text("Go Back")
-                            .foregroundColor(Color.black)
-                    }
-                }
-                
-                Spacer()
-                
-                Button(action: {}) {
-                    HStack {
-                        
-                        Text("Save")
-                            .foregroundColor(Color.black)
-                        
-                        Image("Checkmark").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
-                    }
-                }
-            }
         }
         .padding(.all)
     }
@@ -265,6 +237,6 @@ struct TrackStool: View {
 
 struct TrackStool_Previews: PreviewProvider {
     static var previews: some View {
-        TrackStool()
+        TrackStool(stoolEntry: .constant(StoolEntry()))
     }
 }

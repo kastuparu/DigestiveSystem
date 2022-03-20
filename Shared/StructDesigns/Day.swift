@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct Day {
+class Day: ObservableObject {
     
-    var date = Date()
+    @Published var date = Date()
     
     func dateString() -> String {
         let dateFormatter = DateFormatter()
@@ -17,19 +17,23 @@ struct Day {
         return dateFormatter.string(from : date)
     }
     
-    var grains = 20.0
-    var protein = 20.0
-    var vegetables = 20.0
-    var fruits = 20.0
-    var dairy = 20.0
+    @Published var grains = 20.0
+    @Published var protein = 20.0
+    @Published var vegetables = 20.0
+    @Published var fruits = 20.0
+    @Published var dairy = 20.0
     
-    var sleep = ""
-    var hydration = ""
-    var exercise = ""
-    var stress = ""
+    @Published var sleep = ""
+    @Published var hydration = ""
+    @Published var exercise = ""
+    @Published var stress = ""
     
-    var notes = ""
+    @Published var notes = ""
     
-    var entries : [Entry] = []
+    @Published var entries = [Entry]()
+    
+    @Published var foodEntries = [FoodEntry()]
+    
+    @Published var stoolEntries = [StoolEntry]()
     
 }

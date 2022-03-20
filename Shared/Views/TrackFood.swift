@@ -9,7 +9,8 @@ import SwiftUI
 
 struct TrackFood: View {
     
-    @State private var foodEntry = FoodEntry()
+    @EnvironmentObject var day: Day
+    @State var index: Int
     
     let durations = [0, 5, 15, 30, 45, 60, 75]
     
@@ -17,46 +18,45 @@ struct TrackFood: View {
     
     @State private var isEditing = false
     
-    init() {
-            UITextView.appearance().backgroundColor = .clear
-        }
+    init(index: Int) {
+        
+        self.index = index
+        
+        UITextView.appearance().backgroundColor = .clear
+    }
     
     var body: some View {
-        VStack {
-            
-            Text("Track Food Eaten")
-                .font(.title)
-                .foregroundColor(Color.black)
-                .multilineTextAlignment(.center)
-            
-            HStack {
-                DatePicker(selection: $foodEntry.date, label: {  })
-                    .labelsHidden()
-                
-                Picker("", selection: ($foodEntry.duration)) {
-                    ForEach(durations, id: \.self) { Text(String($0)) }
-                }
-                .accentColor(Color.black)
-                .padding(3)
-                .overlay(RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.black, lineWidth: 2))
-                
-                Text("min")
-            }
-            .padding(.vertical)
-            .frame(maxWidth: .infinity)
-            .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
-            .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
-            .cornerRadius(12)
-            .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
-            
+        
+        NavigationView {
+        
             VStack {
-
+                
+                HStack {
+                    DatePicker(selection: $day.foodEntries[index].date, label: {  })
+                        .labelsHidden()
+                    
+                    Picker("", selection: ($day.foodEntries[index].duration)) {
+                        ForEach(durations, id: \.self) { Text(String($0)) }
+                    }
+                    .accentColor(Color.black)
+                    .padding(3)
+                    .overlay(RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.black, lineWidth: 2))
+                    
+                    Text("min")
+                }
+                .padding(.vertical)
+                .frame(maxWidth: .infinity)
+                .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
+                .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
+                .cornerRadius(12)
+                .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
+                
                 Text("How big was the meal?")
                     .font(.headline)
                     .padding(.top)
                 
-                Slider(value: $foodEntry.size, in: 0...2, step: 0.25,
+                Slider(value: $day.foodEntries[index].size, in: 0...2, step: 0.25,
                        onEditingChanged: {editing in isEditing = editing})
                 
                 HStack {
@@ -70,159 +70,151 @@ struct TrackFood: View {
                     Spacer()
                     Text("2.0x")
                 }
-            }
-            
-            HStack {
                 
-                ZStack {
-                    
-                    Circle()
-                        .stroke(Color.accentColor, lineWidth: 5)
-                    
-                    PieSlicePickerView(pieSliceData: PieSlicePickerData(
-                                    startAngle: Angle(degrees: 0.0),
-                                    endAngle: Angle(degrees: 90.0),
-                                    selectedPercent: $foodEntry.grains,
-                                    text: "Grains",
-                                    percentPicker: percentPicker))
-                    
-                    PieSlicePickerView(pieSliceData: PieSlicePickerData(
-                                    startAngle: Angle(degrees: 90.0),
-                                    endAngle: Angle(degrees: 180.0),
-                                    selectedPercent: $foodEntry.protein,
-                                    text: "Protein",
-                                    percentPicker: percentPicker))
-                    
-                    PieSlicePickerView(pieSliceData: PieSlicePickerData(
-                                    startAngle: Angle(degrees: 180.0),
-                                    endAngle: Angle(degrees: 270.0),
-                                    selectedPercent: $foodEntry.vegetables,
-                                    text: "Vegetables",
-                                    percentPicker: percentPicker))
-                    
-                    PieSlicePickerView(pieSliceData: PieSlicePickerData(
-                                    startAngle: Angle(degrees: 270.0),
-                                    endAngle: Angle(degrees: 360.0),
-                                    selectedPercent: $foodEntry.fruits,
-                                    text: "Fruits",
-                                    percentPicker: percentPicker))
-                    
-                }
-                
-                Spacer()
-                
-                VStack {
+                HStack {
                     
                     ZStack {
+                        
                         Circle()
                             .stroke(Color.accentColor, lineWidth: 5)
-                            .frame(width: 75, height: 75)
                         
-                        VStack {
-                            Picker("", selection: $foodEntry.dairy) {
-                                ForEach(percentPicker, id: \.self) { Text($0) }
-                            }
-                            .accentColor(Color.black)
-                            .padding(3)
-                            .overlay(RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.black, lineWidth: 2))
-                            
-                            Text("Dairy")
-                        }
-                        .foregroundColor(Color.black)
+                        PieSlicePickerView(pieSliceData: PieSlicePickerData(
+                            startAngle: Angle(degrees: 0.0),
+                            endAngle: Angle(degrees: 90.0),
+                            selectedPercent: $day.foodEntries[index].grains,
+                            text: "Grains",
+                            percentPicker: percentPicker))
+                        
+                        PieSlicePickerView(pieSliceData: PieSlicePickerData(
+                            startAngle: Angle(degrees: 90.0),
+                            endAngle: Angle(degrees: 180.0),
+                            selectedPercent: $day.foodEntries[index].protein,
+                            text: "Protein",
+                            percentPicker: percentPicker))
+                        
+                        PieSlicePickerView(pieSliceData: PieSlicePickerData(
+                            startAngle: Angle(degrees: 180.0),
+                            endAngle: Angle(degrees: 270.0),
+                            selectedPercent: $day.foodEntries[index].vegetables,
+                            text: "Vegetables",
+                            percentPicker: percentPicker))
+                        
+                        PieSlicePickerView(pieSliceData: PieSlicePickerData(
+                            startAngle: Angle(degrees: 270.0),
+                            endAngle: Angle(degrees: 360.0),
+                            selectedPercent: $day.foodEntries[index].fruits,
+                            text: "Fruits",
+                            percentPicker: percentPicker))
                     }
                     
                     Spacer()
                     
-                    if foodEntry.foodSum() != 100 {
-                        Text("doesn't add to 100%")
-                            .foregroundColor(Color.red)
-                            .multilineTextAlignment(.center)
+                    VStack {
+                        
+                        ZStack {
+                            Circle()
+                                .stroke(Color.accentColor, lineWidth: 5)
+                                .frame(width: 75, height: 75)
+                            
+                            VStack {
+                                Picker("", selection: $day.foodEntries[index].dairy) {
+                                    ForEach(percentPicker, id: \.self) { Text($0) }
+                                }
+                                .accentColor(Color.black)
+                                .padding(3)
+                                .overlay(RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color.black, lineWidth: 2))
+                                
+                                Text("Dairy")
+                            }
+                            .foregroundColor(Color.black)
+                        }
+                        
+                        Spacer()
+                        
+                        if day.foodEntries[index].foodSum() != 100 {
+                            Text("doesn't add to 100%")
+                                .foregroundColor(Color.red)
+                                .multilineTextAlignment(.center)
+                        }
+                        
+                        Spacer()
+                        
+                        Button(action: {}) {
+                            VStack {
+                                Image(systemName: "square.and.arrow.up").resizable().aspectRatio(contentMode: .fit).frame(height: 50).foregroundColor(Color.gray)
+                                Text("Upload Image").foregroundColor(Color.black)
+                            }
+                        }
                     }
-                }
-                .frame(width: 100)
-            }
-            
-            HStack {
-                
-                VStack {
-                    CheckBoxView(checked: $foodEntry.probiotics)
-                    CheckBoxView(checked: $foodEntry.collagens)
-                    CheckBoxView(checked: $foodEntry.garliconion)
+                    .frame(width: 100)
                 }
                 
-                VStack {
-                    Text("probiotics")
-                    Text("collagens")
-                    Text("garlic/onion")
+                HStack {
+                    
+                    Spacer()
+                    
+                    VStack {
+                        CheckBoxView(checked: $day.foodEntries[index].probiotics)
+                        CheckBoxView(checked: $day.foodEntries[index].collagens)
+                        CheckBoxView(checked: $day.foodEntries[index].garliconion)
+                    }
+                    
+                    VStack {
+                        Text("probiotics")
+                        Text("collagens")
+                        Text("garlic/onion")
+                    }
+                    
+                    Spacer()
+                    
+                    VStack {
+                        CheckBoxView(checked: $day.foodEntries[index].processed)
+                        CheckBoxView(checked: $day.foodEntries[index].spicy)
+                        CheckBoxView(checked: $day.foodEntries[index].highsugar)
+                    }
+                    
+                    VStack {
+                        Text("processed")
+                        Text("spicy")
+                        Text("high sugar")
+                    }
+                    
+                    Spacer()
                 }
+                .padding(.all)
                 
-                Spacer()
+                Text("Notes")
+                    .font(.headline)
+                  
+                TextEditor(text: $day.foodEntries[index].notes)
+                    .padding(.all)
+                    .frame(maxWidth: .infinity)
+                    .frame(maxHeight: 75)
+                    .foregroundColor(Color.black)
+                    .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
+                    .cornerRadius(12)
+                    .font(.body)
                 
-                VStack {
-                    CheckBoxView(checked: $foodEntry.processed)
-                    CheckBoxView(checked: $foodEntry.spicy)
-                    CheckBoxView(checked: $foodEntry.highsugar)
-                }
-                
-                VStack {
-                    Text("processed")
-                    Text("spicy")
-                    Text("high sugar")
-                }
-                
-                Spacer()
-                
-                Button(action: {}) {
-                    Image("Upload").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
-                }
             }
             .padding(.all)
-            
-            Text("Notes")
-                .font(.headline)
-              
-            TextEditor(text: $foodEntry.notes)
-                .padding(.all)
-                .frame(maxWidth: .infinity)
-                .frame(maxHeight: 75)
-                .foregroundColor(Color.black)
-                .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
-                .cornerRadius(12)
-                .font(.body)
-            
-            HStack {
-            
-                Button(action: {}) {
-                    HStack {
-                        
-                        Image("Cancel").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
-                        
-                        Text("Go Back")
-                            .foregroundColor(Color.black)
-                    }
-                }
-                
-                Spacer()
-                
-                Button(action: {}) {
-                    HStack {
-                        
-                        Text("Save")
-                            .foregroundColor(Color.black)
-                        
-                        Image("Checkmark").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
-                    }
-                }
+        }
+        .environmentObject(day)
+        .onAppear() {
+            if index == -1 {
+                day.foodEntries.append(FoodEntry())
+                index = day.foodEntries.count - 1
+                print(index)
             }
         }
-        .padding(.all)
+        .navigationTitle("Track Food Eaten")
     }
 }
 
 struct TrackFood_Previews: PreviewProvider {
+    static let day = Day()
     static var previews: some View {
-        TrackFood()
-.previewInterfaceOrientation(.portrait)
+        TrackFood(index: -1)
+            .environmentObject(day)
     }
 }

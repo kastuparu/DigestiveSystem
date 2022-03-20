@@ -7,40 +7,30 @@
 
 import Foundation
 
-protocol Entry {
-    var date : Date { get set }
-    var notes : String { get set }
+class Entry: ObservableObject {
+    @Published var date = Date()
+    @Published var notes = ""
 }
 
-extension Entry {
-
-    static func parseVehicleFields(jsonDict: [String:Any]) -> (Date, String) {
-        let date = jsonDict["date"] as! Date
-        let notes = jsonDict["notes"] as! String
-        return (date, notes)
-    }
-}
-
-
-struct FoodEntry {
+class FoodEntry: ObservableObject {
     
-    var date = Date()
-    var duration = 0
-    var size = 1.0
-    var notes = ""
+    @Published var date = Date()
+    @Published var duration = 0
+    @Published var size = 1.0
+    @Published var notes = ""
     
-    var probiotics = false
-    var collagens = false
-    var garliconion = false
-    var processed = false
-    var spicy = false
-    var highsugar = false
+    @Published var probiotics = false
+    @Published var collagens = false
+    @Published var garliconion = false
+    @Published var processed = false
+    @Published var spicy = false
+    @Published var highsugar = false
     
-    var grains = ""
-    var protein = ""
-    var vegetables = ""
-    var fruits = ""
-    var dairy = ""
+    @Published var grains = ""
+    @Published var protein = ""
+    @Published var vegetables = ""
+    @Published var fruits = ""
+    @Published var dairy = ""
     
     func foodToInt(food: String) -> Int {
         return Int(food.dropLast()) ?? -1
@@ -52,7 +42,7 @@ struct FoodEntry {
     
 }
 
-struct StoolEntry {
+class StoolEntry {
     
     var date = Date()
     var duration = 0
