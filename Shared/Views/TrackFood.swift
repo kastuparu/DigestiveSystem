@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TrackFood: View {
     
-    @EnvironmentObject var day: Day
+    @ObservedObject var day: Day
     @State var index: Int
     
     let durations = [0, 5, 15, 30, 45, 60, 75]
@@ -18,8 +18,9 @@ struct TrackFood: View {
     
     @State private var isEditing = false
     
-    init(index: Int) {
+    init(day: Day, index: Int) {
         
+        self.day = day
         self.index = index
         
         UITextView.appearance().backgroundColor = .clear
@@ -199,22 +200,22 @@ struct TrackFood: View {
             }
             .padding(.all)
         }
-        .environmentObject(day)
-        .onAppear() {
+        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(false)
+        .onAppear(perform: {
             if index == -1 {
+                index = day.foodEntries.count
                 day.foodEntries.append(FoodEntry())
-                index = day.foodEntries.count - 1
-                print(index)
             }
-        }
+        })
         .navigationTitle("Track Food Eaten")
     }
 }
 
 struct TrackFood_Previews: PreviewProvider {
-    static let day = Day()
+    static var day = Day()
     static var previews: some View {
-        TrackFood(index: -1)
+        TrackFood(day: day, index: 0)
             .environmentObject(day)
     }
 }

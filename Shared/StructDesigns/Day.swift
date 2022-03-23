@@ -7,11 +7,13 @@
 
 import Foundation
 
-class Day: ObservableObject {
+class Day: ObservableObject, Identifiable {
     
-    @Published var date = Date()
+    let id = UUID()
     
-    func dateString() -> String {
+    let date = Date()
+    
+    var dateString: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM dd, yyyy"
         return dateFormatter.string(from : date)
@@ -30,10 +32,19 @@ class Day: ObservableObject {
     
     @Published var notes = ""
     
-    @Published var entries = [Entry]()
+    var entries: [Entry] {
+        
+        let unsortedEntries = foodEntries + stoolEntries
+        
+        return unsortedEntries.sorted(by: {
+            $0.date.compare($1.date) == .orderedAscending
+        })
+        
+    }
     
     @Published var foodEntries = [FoodEntry()]
     
     @Published var stoolEntries = [StoolEntry]()
+    
     
 }

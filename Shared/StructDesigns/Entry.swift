@@ -7,17 +7,38 @@
 
 import Foundation
 
-class Entry: ObservableObject {
+class Entry: ObservableObject, Identifiable {
+    
+    let id = UUID()
+    
+    var food: Bool {
+        return self is FoodEntry
+    }
+
     @Published var date = Date()
-    @Published var notes = ""
+    
+    var timeStamp: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+        return dateFormatter.string(from : date)
+    }
+    
+    @Published var notes = "notes"
+    var shortNotes: String {
+        if notes.count > 11 {
+            return notes.prefix(9) + "..."
+        }
+        else {
+            return notes
+        }
+    }
+    
 }
 
-class FoodEntry: ObservableObject {
+class FoodEntry: Entry {
     
-    @Published var date = Date()
     @Published var duration = 0
     @Published var size = 1.0
-    @Published var notes = ""
     
     @Published var probiotics = false
     @Published var collagens = false
@@ -26,11 +47,11 @@ class FoodEntry: ObservableObject {
     @Published var spicy = false
     @Published var highsugar = false
     
-    @Published var grains = ""
-    @Published var protein = ""
-    @Published var vegetables = ""
-    @Published var fruits = ""
-    @Published var dairy = ""
+    @Published var grains = "0%"
+    @Published var protein = "0%"
+    @Published var vegetables = "0%"
+    @Published var fruits = "0%"
+    @Published var dairy = "0%"
     
     func foodToInt(food: String) -> Int {
         return Int(food.dropLast()) ?? -1
@@ -42,13 +63,11 @@ class FoodEntry: ObservableObject {
     
 }
 
-class StoolEntry {
+class StoolEntry: Entry {
     
-    var date = Date()
     var duration = 0
     var size = 1.0
     var difficulty = 1.0
-    var notes = ""
     
     var brown = false
     var orange = false

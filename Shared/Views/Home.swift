@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Home: View {
     
-    @EnvironmentObject var day: Day
+    @ObservedObject var day: Day
     
     var body: some View {
             
@@ -27,7 +27,7 @@ struct Home: View {
                         
                     VStack {
                             
-                        Text(day.dateString())
+                        Text(day.dateString)
                             .font(.largeTitle)
                             .multilineTextAlignment(.leading)
                             
@@ -123,7 +123,7 @@ struct Home: View {
                 Spacer()
                     
                 
-                NavigationLink(destination: TrackFood(index: 0)) {
+                NavigationLink(destination: TrackFood(day: day, index: 0)) {
                     HStack {
                         Text("Track Food Eaten")
                         Spacer()
@@ -155,14 +155,12 @@ struct Home: View {
             }
             .padding(.all)
         }
-        .environmentObject(day)
     }
 }
 
 struct Home_Previews: PreviewProvider {
-    static let day = Day()
+    static var day = Day()
     static var previews: some View {
-        Home()
-            .environmentObject(day)
+        Home(day: day)
     }
 }
