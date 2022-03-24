@@ -65,22 +65,22 @@ class FoodEntry: Entry {
 
 class StoolEntry: Entry {
     
-    var duration = 0
-    var size = 1.0
-    var difficulty = 1.0
+    @Published var duration = 0
+    @Published var size = 1.0
+    @Published var difficulty = 1.0
     
-    var brown = false
-    var orange = false
-    var yellow = false
-    var green = false
-    var booger = false
+    @Published var brown = false
+    @Published var orange = false
+    @Published var yellow = false
+    @Published var green = false
+    @Published var booger = false
     
-    var smooth = false
-    var soft = false
-    var watery = false
-    var sticky = false
-    var fluffy = false
-    var lumpy = false
-    var mushy = false
+    @Published var smooth = false
+    @Published var soft = false
+    @Published var watery = false
+    @Published var sticky = false
+    @Published var fluffy = false
+    @Published var lumpy = false
+    @Published var mushy = false
     
 }

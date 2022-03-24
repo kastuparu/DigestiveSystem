@@ -5,27 +5,22 @@
 //  Created by Katy Stuparu on 2/17/22.
 //
 
+import Introspect
 import SwiftUI
 
 struct Home: View {
     
-    @ObservedObject private var day: Day
+    @EnvironmentObject private var day: Day
     
-    init(day: Day) {
-        self.day = day
-    }
+    @State private var isActive1 = false
+    @State private var isActive2 = false
+    @State private var uiTabarController: UITabBarController?
     
     var body: some View {
             
         NavigationView {
             
             VStack {
-                
-                Text("App Name")
-                    .foregroundColor(Color.black)
-                    .multilineTextAlignment(.center)
-                
-                Spacer()
                 
                 VStack {
                         
@@ -41,10 +36,10 @@ struct Home: View {
                     }
                     .padding(.vertical)
                     .frame(maxWidth: .infinity)
-                    .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
-                    .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
+                    .background(Color.accentColor)
+                    .font(.title2)
                     
-                    Button(action: {}) {
+                    NavigationLink(destination: DailySummary()) {
                         
                         HStack {
                                 
@@ -98,7 +93,7 @@ struct Home: View {
                                         .frame(width: 75, height: 75)
                                     
                                     VStack {
-                                        Text(String(day.dairy) + "%")
+                                        Text(String(Int(day.dairy)) + "%")
                                         Text("Dairy")
                                     }
                                     .foregroundColor(Color.black)
@@ -117,6 +112,7 @@ struct Home: View {
                         }
                     }
                     .padding(.all)
+                    
                 }
                 .frame(maxWidth: .infinity)
                 .cornerRadius(25)
@@ -126,8 +122,13 @@ struct Home: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: TrackFood(day: day)) {
-                    HStack {
+                NavigationLink(destination: TrackFood(index: day.foodEntries.count - 1), isActive: $isActive1) {
+                    
+                    Button(action: {
+                        day.foodEntries.append(FoodEntry())
+                        isActive1 = true
+                    }) {
+                        Spacer()
                         Text("Track Food Eaten")
                         Spacer()
                         Image("Food").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
@@ -141,12 +142,19 @@ struct Home: View {
                 
                 Spacer()
                 
-                HStack {
-                //NavigationLink(destination: TrackStool()) {
-                    HStack {
-                        Image("Stool").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
-                        Spacer()
-                        Text("Track Gut Conditions")
+                
+                NavigationLink(destination: TrackStool(index: day.stoolEntries.count - 1), isActive: $isActive2) {
+                    
+                    Button(action: {
+                        day.stoolEntries.append(StoolEntry())
+                        isActive2 = true
+                    }) {
+                        HStack {
+                            Image("Stool").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
+                            Spacer()
+                            Text("Track Stool")
+                            Spacer()
+                        }
                     }
                 }
                 .padding(.all)
@@ -157,13 +165,24 @@ struct Home: View {
                 
             }
             .padding(.all)
+            .navigationBarTitle("Home", displayMode: .inline)
         }
+        .environmentObject(day)
+        .introspectTabBarController { (UITabBarController) in
+                    UITabBarController.tabBar.isHidden = false
+                    uiTabarController = UITabBarController
+                }
+        .onDisappear {
+            uiTabarController?.tabBar.isHidden = true
+        }
+        .navigationViewStyle(.stack)
     }
 }
 
 struct Home_Previews: PreviewProvider {
     static var day = Day()
     static var previews: some View {
-        Home(day: day)
+        Home()
+            .environmentObject(day)
     }
 }

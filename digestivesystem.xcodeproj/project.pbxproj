@@ -21,6 +21,7 @@
 		42D27EB127E0C5CA00B4C804 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D27EB027E0C5CA00B4C804 /* Day.swift */; };
 		42D5FE7027BE8155002BD73C /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D5FE6F27BE8155002BD73C /* Home.swift */; };
 		42D5FE7427BE87F3002BD73C /* DailySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D5FE7327BE87F3002BD73C /* DailySummary.swift */; };
+		42E1832E27ECB982009C844E /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 42E1832D27ECB982009C844E /* Introspect */; };
 		42F9FD7027C295800035C8DE /* TrackFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9FD6F27C295800035C8DE /* TrackFood.swift */; };
 		42F9FD7227C3C10F0035C8DE /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9FD7127C3C10F0035C8DE /* CheckBoxView.swift */; };
 /* End PBXBuildFile section */
@@ -36,7 +37,6 @@
 		42AEF42327927B3B0022B87F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		42AEF42427927B3E0022B87F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42AEF42927927B3E0022B87F /* digestivesystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = digestivesystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		42AEF43127927B3E0022B87F /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		42BB224827EA40C100CD79C9 /* DayList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayList.swift; sourceTree = "<group>"; };
 		42D27EAC27E0C15700B4C804 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		42D27EB027E0C5CA00B4C804 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
@@ -51,13 +51,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42E1832E27ECB982009C844E /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		427424A727C53E560065B8D1 /* ViewParts */ = {
+		427424A727C53E560065B8D1 /* PartViews */ = {
 			isa = PBXGroup;
 			children = (
 				42F9FD7127C3C10F0035C8DE /* CheckBoxView.swift */,
@@ -66,29 +67,27 @@
 				42996BD227EAC30B00CDFE18 /* EntryView.swift */,
 				424A170627EA12E400829721 /* DayView.swift */,
 			);
-			path = ViewParts;
+			path = PartViews;
 			sourceTree = "<group>";
 		};
 		42AEF41C27927B3B0022B87F = {
 			isa = PBXGroup;
 			children = (
-				42AEF42127927B3B0022B87F /* Shared */,
-				42AEF43027927B3E0022B87F /* macOS */,
+				42AEF42127927B3B0022B87F /* DigestiveSystem */,
 				42AEF42A27927B3E0022B87F /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		42AEF42127927B3B0022B87F /* Shared */ = {
+		42AEF42127927B3B0022B87F /* DigestiveSystem */ = {
 			isa = PBXGroup;
 			children = (
-				42D27EAF27E0C33500B4C804 /* StructDesigns */,
-				427424A727C53E560065B8D1 /* ViewParts */,
-				42D5FE6C27BE80A9002BD73C /* Views */,
+				42D27EAF27E0C33500B4C804 /* DataClasses */,
+				427424A727C53E560065B8D1 /* PartViews */,
+				42D5FE6C27BE80A9002BD73C /* ContentViews */,
 				42AEF42227927B3B0022B87F /* digestivesystemApp.swift */,
-				42AEF42327927B3B0022B87F /* ContentView.swift */,
 				42AEF42427927B3E0022B87F /* Assets.xcassets */,
 			);
-			path = Shared;
+			path = DigestiveSystem;
 			sourceTree = "<group>";
 		};
 		42AEF42A27927B3E0022B87F /* Products */ = {
@@ -99,34 +98,27 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		42AEF43027927B3E0022B87F /* macOS */ = {
-			isa = PBXGroup;
-			children = (
-				42AEF43127927B3E0022B87F /* macOS.entitlements */,
-			);
-			path = macOS;
-			sourceTree = "<group>";
-		};
-		42D27EAF27E0C33500B4C804 /* StructDesigns */ = {
+		42D27EAF27E0C33500B4C804 /* DataClasses */ = {
 			isa = PBXGroup;
 			children = (
 				42D27EAC27E0C15700B4C804 /* Entry.swift */,
 				42D27EB027E0C5CA00B4C804 /* Day.swift */,
 				42BB224827EA40C100CD79C9 /* DayList.swift */,
 			);
-			path = StructDesigns;
+			path = DataClasses;
 			sourceTree = "<group>";
 		};
-		42D5FE6C27BE80A9002BD73C /* Views */ = {
+		42D5FE6C27BE80A9002BD73C /* ContentViews */ = {
 			isa = PBXGroup;
 			children = (
+				42AEF42327927B3B0022B87F /* ContentView.swift */,
 				42D5FE6F27BE8155002BD73C /* Home.swift */,
 				42D5FE7327BE87F3002BD73C /* DailySummary.swift */,
 				42F9FD6F27C295800035C8DE /* TrackFood.swift */,
 				427424A827C53EB60065B8D1 /* TrackStool.swift */,
 				426CC88327C59B6600FEF881 /* Calendar.swift */,
 			);
-			path = Views;
+			path = ContentViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,6 +137,9 @@
 			dependencies = (
 			);
 			name = "digestivesystem (iOS)";
+			packageProductDependencies = (
+				42E1832D27ECB982009C844E /* Introspect */,
+			);
 			productName = "digestivesystem (iOS)";
 			productReference = 42AEF42927927B3E0022B87F /* digestivesystem.app */;
 			productType = "com.apple.product-type.application";
@@ -173,6 +168,9 @@
 				Base,
 			);
 			mainGroup = 42AEF41C27927B3B0022B87F;
+			packageReferences = (
+				42E1832C27ECB982009C844E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+			);
 			productRefGroup = 42AEF42A27927B3E0022B87F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -415,6 +413,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		42E1832C27ECB982009C844E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		42E1832D27ECB982009C844E /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42E1832C27ECB982009C844E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 42AEF41D27927B3B0022B87F /* Project object */;
 }

@@ -13,15 +13,18 @@ struct ContentView: View {
     @StateObject var dayList = DayList()
     
     var body: some View {
+        
         TabView {
             
-            Home(day: day)
+            Home()
+                .environmentObject(day)
                 .tabItem() {
                     Image(systemName: "house").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
                     Text("Home")
             }
             
-            Calendar(dayList: dayList)
+            Calendar()
+                .environmentObject(dayList)
                 .tabItem() {
                     Image(systemName: "calendar").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
                     Text("Calendar")
@@ -34,6 +37,7 @@ struct ContentView: View {
             // Image(systemName: "slider.horizontal.3").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
             
         }
+        .navigationViewStyle(.stack)
     }
 }
 
