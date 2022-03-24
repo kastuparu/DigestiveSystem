@@ -9,7 +9,11 @@ import SwiftUI
 
 struct Home: View {
     
-    @ObservedObject var day: Day
+    @ObservedObject private var day: Day
+    
+    init(day: Day) {
+        self.day = day
+    }
     
     var body: some View {
             
@@ -119,11 +123,10 @@ struct Home: View {
                 .overlay(RoundedRectangle(cornerRadius: 25)
                 .stroke(Color.black, lineWidth: 5)
                 .frame(maxHeight: .infinity))
-                    
-                Spacer()
-                    
                 
-                NavigationLink(destination: TrackFood(day: day, index: 0)) {
+                Spacer()
+                
+                NavigationLink(destination: TrackFood(day: day)) {
                     HStack {
                         Text("Track Food Eaten")
                         Spacer()
@@ -135,7 +138,7 @@ struct Home: View {
                 .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
                 .cornerRadius(12)
                 .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
-                    
+                
                 Spacer()
                 
                 HStack {
@@ -151,7 +154,7 @@ struct Home: View {
                 .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
                 .cornerRadius(12)
                 .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
-                    
+                
             }
             .padding(.all)
         }

@@ -9,19 +9,28 @@ import SwiftUI
 
 struct TrackFood: View {
     
-    @ObservedObject var day: Day
-    @State var index: Int
+    @StateObject private var foodEntry: FoodEntry
+    @ObservedObject private var day: Day
     
     let durations = [0, 5, 15, 30, 45, 60, 75]
-    
     let percentPicker = ["0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"]
     
     @State private var isEditing = false
     
-    init(day: Day, index: Int) {
+    init(foodEntry: FoodEntry, day: Day) {
         
+        _foodEntry = StateObject(wrappedValue: foodEntry)
         self.day = day
-        self.index = index
+        
+        UITextView.appearance().backgroundColor = .clear
+    }
+    
+    init(day: Day) {
+        
+        _foodEntry = StateObject(wrappedValue: FoodEntry())
+        self.day = day
+        
+        day.foodEntries.append(foodEntry)
         
         UITextView.appearance().backgroundColor = .clear
     }
@@ -33,10 +42,10 @@ struct TrackFood: View {
             VStack {
                 
                 HStack {
-                    DatePicker(selection: $day.foodEntries[index].date, label: {  })
+                    DatePicker(selection: $foodEntry.date, label: {  })
                         .labelsHidden()
                     
-                    Picker("", selection: ($day.foodEntries[index].duration)) {
+                    Picker("", selection: ($foodEntry.duration)) {
                         ForEach(durations, id: \.self) { Text(String($0)) }
                     }
                     .accentColor(Color.black)
@@ -57,7 +66,7 @@ struct TrackFood: View {
                     .font(.headline)
                     .padding(.top)
                 
-                Slider(value: $day.foodEntries[index].size, in: 0...2, step: 0.25,
+                Slider(value: $foodEntry.size, in: 0...2, step: 0.25,
                        onEditingChanged: {editing in isEditing = editing})
                 
                 HStack {
@@ -82,28 +91,28 @@ struct TrackFood: View {
                         PieSlicePickerView(pieSliceData: PieSlicePickerData(
                             startAngle: Angle(degrees: 0.0),
                             endAngle: Angle(degrees: 90.0),
-                            selectedPercent: $day.foodEntries[index].grains,
+                            selectedPercent: $foodEntry.grains,
                             text: "Grains",
                             percentPicker: percentPicker))
                         
                         PieSlicePickerView(pieSliceData: PieSlicePickerData(
                             startAngle: Angle(degrees: 90.0),
                             endAngle: Angle(degrees: 180.0),
-                            selectedPercent: $day.foodEntries[index].protein,
+                            selectedPercent: $foodEntry.protein,
                             text: "Protein",
                             percentPicker: percentPicker))
                         
                         PieSlicePickerView(pieSliceData: PieSlicePickerData(
                             startAngle: Angle(degrees: 180.0),
                             endAngle: Angle(degrees: 270.0),
-                            selectedPercent: $day.foodEntries[index].vegetables,
+                            selectedPercent: $foodEntry.vegetables,
                             text: "Vegetables",
                             percentPicker: percentPicker))
                         
                         PieSlicePickerView(pieSliceData: PieSlicePickerData(
                             startAngle: Angle(degrees: 270.0),
                             endAngle: Angle(degrees: 360.0),
-                            selectedPercent: $day.foodEntries[index].fruits,
+                            selectedPercent: $foodEntry.fruits,
                             text: "Fruits",
                             percentPicker: percentPicker))
                     }
@@ -118,7 +127,7 @@ struct TrackFood: View {
                                 .frame(width: 75, height: 75)
                             
                             VStack {
-                                Picker("", selection: $day.foodEntries[index].dairy) {
+                                Picker("", selection: $foodEntry.dairy) {
                                     ForEach(percentPicker, id: \.self) { Text($0) }
                                 }
                                 .accentColor(Color.black)
@@ -133,7 +142,7 @@ struct TrackFood: View {
                         
                         Spacer()
                         
-                        if day.foodEntries[index].foodSum() != 100 {
+                        if foodEntry.foodSum() != 100 {
                             Text("doesn't add to 100%")
                                 .foregroundColor(Color.red)
                                 .multilineTextAlignment(.center)
@@ -156,9 +165,9 @@ struct TrackFood: View {
                     Spacer()
                     
                     VStack {
-                        CheckBoxView(checked: $day.foodEntries[index].probiotics)
-                        CheckBoxView(checked: $day.foodEntries[index].collagens)
-                        CheckBoxView(checked: $day.foodEntries[index].garliconion)
+                        CheckBoxView(checked: $foodEntry.probiotics)
+                        CheckBoxView(checked: $foodEntry.collagens)
+                        CheckBoxView(checked: $foodEntry.garliconion)
                     }
                     
                     VStack {
@@ -170,9 +179,9 @@ struct TrackFood: View {
                     Spacer()
                     
                     VStack {
-                        CheckBoxView(checked: $day.foodEntries[index].processed)
-                        CheckBoxView(checked: $day.foodEntries[index].spicy)
-                        CheckBoxView(checked: $day.foodEntries[index].highsugar)
+                        CheckBoxView(checked: $foodEntry.processed)
+                        CheckBoxView(checked: $foodEntry.spicy)
+                        CheckBoxView(checked: $foodEntry.highsugar)
                     }
                     
                     VStack {
@@ -188,7 +197,7 @@ struct TrackFood: View {
                 Text("Notes")
                     .font(.headline)
                   
-                TextEditor(text: $day.foodEntries[index].notes)
+                TextEditor(text: $foodEntry.notes)
                     .padding(.all)
                     .frame(maxWidth: .infinity)
                     .frame(maxHeight: 75)
@@ -200,22 +209,12 @@ struct TrackFood: View {
             }
             .padding(.all)
         }
-        .navigationBarHidden(true)
-        .navigationBarBackButtonHidden(false)
-        .onAppear(perform: {
-            if index == -1 {
-                index = day.foodEntries.count
-                day.foodEntries.append(FoodEntry())
-            }
-        })
-        .navigationTitle("Track Food Eaten")
     }
 }
 
 struct TrackFood_Previews: PreviewProvider {
     static var day = Day()
     static var previews: some View {
-        TrackFood(day: day, index: 0)
-            .environmentObject(day)
+        TrackFood(day: day)
     }
 }

@@ -42,7 +42,7 @@ class Day: ObservableObject, Identifiable {
         
     }
     
-    @Published var foodEntries = [FoodEntry()]
+    @Published var foodEntries = [FoodEntry]()
     
     @Published var stoolEntries = [StoolEntry]()
     

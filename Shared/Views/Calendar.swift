@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Calendar: View {
     
-    @ObservedObject var dayList: DayList
+    @ObservedObject private var dayList: DayList
     
     init(dayList: DayList) {
         self.dayList = dayList
@@ -28,7 +28,6 @@ struct Calendar: View {
             }
             .listStyle(SidebarListStyle())
         }
-        .environmentObject(dayList)
     }
 }
 
@@ -36,6 +35,5 @@ struct Calendar_Previews: PreviewProvider {
     static var dayList = DayList()
     static var previews: some View {
         Calendar(dayList: dayList)
-            .environmentObject(dayList)
     }
 }
