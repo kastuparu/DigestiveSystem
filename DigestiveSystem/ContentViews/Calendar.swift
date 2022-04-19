@@ -11,7 +11,7 @@ struct Calendar: View {
     
     @EnvironmentObject private var dayList: DayList
     
-    @State private var uiTabarController: UITabBarController?
+    @State private var selectedDay: Day? = nil
     
     init() {
         UITableView.appearance().backgroundColor = .clear
@@ -20,20 +20,33 @@ struct Calendar: View {
     var body: some View {
         
         NavigationView {
-            VStack {
+            
+            ScrollView {
                 
-                List(dayList.list) { day in
-                    DayView(day: day)
+                VStack {
+                    
+                    ForEach(dayList.list) { day in
+                        
+                        Button(action: {
+                            selectedDay = day
+                        }) {
+                          DayView(day: day)
+                        }
+                    }
+                    
+                    Spacer()
+                    
                 }
-                .listStyle(SidebarListStyle())
+                .sheet(item: self.$selectedDay) { day in
+                    let i = dayList.getIndex(id: day.id)
+                    DailySummary(dayIndex: i)
+                }
+                .padding(.all)
             }
-            .navigationBarTitle("Calendar", displayMode: .inline)
+            .navigationBarTitle("Calendar")
         }
+        
         .environmentObject(dayList)
-        .introspectTabBarController { (UITabBarController) in
-                    UITabBarController.tabBar.isHidden = true
-                    uiTabarController = UITabBarController
-                }
     }
 }
 

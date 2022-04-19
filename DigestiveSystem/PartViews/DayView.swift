@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DayView: View {
     
-    var day: Day
+    let day: Day
     
     var body: some View {
         
@@ -37,13 +37,14 @@ struct DayView: View {
         }
         .padding(.all)
         .frame(maxWidth: .infinity)
+        .foregroundColor(Color.black)
         .background(Color.accentColor)
         .cornerRadius(12)
     }
 }
 
 struct DayView_Previews: PreviewProvider {
-    static var day = Day()
+    static var day = Day(date: Date())
     static var previews: some View {
         DayView(day: day)
     }

@@ -5,18 +5,25 @@
 //  Created by Katy Stuparu on 2/17/22.
 //
 
-import Introspect
 import SwiftUI
 
 struct Home: View {
     
-    @EnvironmentObject private var day: Day
+    @EnvironmentObject private var dayList: DayList
+    let dayIndex: Int
     
+    @State private var isActive = false
     @State private var isActive1 = false
     @State private var isActive2 = false
-    @State private var uiTabarController: UITabBarController?
     
     var body: some View {
+        
+        let grains = dayList.list[dayIndex].grains
+        let protein = dayList.list[dayIndex].protein
+        let vegetables = dayList.list[dayIndex].vegetables
+        let fruits = dayList.list[dayIndex].fruits
+        let dairy = dayList.list[dayIndex].dairy
+        let sum = grains + protein + vegetables + fruits
             
         NavigationView {
             
@@ -26,7 +33,7 @@ struct Home: View {
                         
                     VStack {
                             
-                        Text(day.dateString)
+                        Text(dayList.list[dayIndex].dateString)
                             .font(.largeTitle)
                             .multilineTextAlignment(.leading)
                             
@@ -39,61 +46,56 @@ struct Home: View {
                     .background(Color.accentColor)
                     .font(.title2)
                     
-                    NavigationLink(destination: DailySummary()) {
-                        
+                    Button(action: {
+                        isActive = true
+                    }) {
                         HStack {
-                                
+                            
                             ZStack {
-                                
-                                Circle()
-                                    .stroke(Color.accentColor, lineWidth: 5)
-                                
-                                let sum = day.grains + day.protein + day.vegetables + day.fruits
-                                
-                                Text(String(day.grains / sum))
-                                
-                                if day.grains != 0 {
+                                if grains != 0 {
                                     PieSliceView(pieSliceData: PieSliceData(
                                         startAngle: Angle(degrees: 0.0),
-                                        endAngle: Angle(degrees: day.grains / sum * 360.0),
-                                        text1: String(Int(day.grains)) + "%",
+                                        endAngle: Angle(degrees: grains / sum * 360.0),
+                                        text1: String(Int(grains)) + "%",
                                         text2: "Grains"))
                                 }
-                                    
-                                if day.protein != 0 {
+                                
+                                if protein != 0 {
                                     PieSliceView(pieSliceData: PieSliceData(
-                                        startAngle: Angle(degrees: day.grains / sum * 360.0),
-                                        endAngle: Angle(degrees: (day.protein + day.grains) / sum * 360.0),
-                                        text1: String(Int(day.protein)) + "%",
+                                        startAngle: Angle(degrees: grains / sum * 360.0),
+                                        endAngle: Angle(degrees: (protein + grains) / sum * 360.0),
+                                        text1: String(Int(protein)) + "%",
                                         text2: "Protein"))
                                 }
-                                 
-                                if day.vegetables != 0 {
+                                
+                                if vegetables != 0 {
                                     PieSliceView(pieSliceData: PieSliceData(
-                                        startAngle: Angle(degrees: (day.protein + day.grains) / sum * 360.0),
-                                        endAngle: Angle(degrees: (day.vegetables + day.protein + day.grains) / sum * 360.0),
-                                        text1: String(Int(day.vegetables)) + "%",
+                                        startAngle: Angle(degrees: (protein + grains) / sum * 360.0),
+                                        endAngle: Angle(degrees: (vegetables + protein + grains) / sum * 360.0),
+                                        text1: String(Int(vegetables)) + "%",
                                         text2: "Vegetables"))
                                 }
-                                 
-                                if day.fruits != 0 {
+                                
+                                if fruits != 0 {
                                     PieSliceView(pieSliceData: PieSliceData(
-                                        startAngle: Angle(degrees: (day.vegetables + day.protein + day.grains) / sum * 360.0),
+                                        startAngle: Angle(degrees: (vegetables + protein + grains) / sum * 360.0),
                                         endAngle: Angle(degrees: 360.0),
-                                        text1: String(Int(day.fruits)) + "%",
+                                        text1: String(Int(fruits)) + "%",
                                         text2: "Fruits"))
                                 }
+                             
                             }
                             
                             VStack {
                                 
                                 ZStack {
+                                    
                                     Circle()
                                         .stroke(Color.accentColor, lineWidth: 5)
                                         .frame(width: 75, height: 75)
                                     
                                     VStack {
-                                        Text(String(Int(day.dairy)) + "%")
+                                        Text(String(Int(dairy)) + "%")
                                         Text("Dairy")
                                     }
                                     .foregroundColor(Color.black)
@@ -111,8 +113,10 @@ struct Home: View {
                             }
                         }
                     }
+                    .sheet(isPresented: $isActive) {
+                        DailySummary(dayIndex: dayIndex)
+                    }
                     .padding(.all)
-                    
                 }
                 .frame(maxWidth: .infinity)
                 .cornerRadius(25)
@@ -122,17 +126,17 @@ struct Home: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: TrackFood(index: day.foodEntries.count - 1), isActive: $isActive1) {
-                    
-                    Button(action: {
-                        day.foodEntries.append(FoodEntry())
-                        isActive1 = true
-                    }) {
-                        Spacer()
-                        Text("Track Food Eaten")
-                        Spacer()
-                        Image("Food").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
-                    }
+                Button(action: {
+                    dayList.list[dayIndex].foodEntries.append(FoodEntry())
+                    isActive1 = true
+                }) {
+                    Spacer()
+                    Text("Track Food Eaten")
+                    Spacer()
+                    Image("Food").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
+                }
+                .sheet(isPresented: $isActive1) {
+                    TrackFood(dayIndex: dayIndex, index: dayList.list[dayIndex].foodEntries.count - 1)
                 }
                 .padding(.all)
                 .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
@@ -142,20 +146,18 @@ struct Home: View {
                 
                 Spacer()
                 
-                
-                NavigationLink(destination: TrackStool(index: day.stoolEntries.count - 1), isActive: $isActive2) {
+                Button(action: {
+                    dayList.list[dayIndex].stoolEntries.append(StoolEntry())
+                    isActive2 = true
                     
-                    Button(action: {
-                        day.stoolEntries.append(StoolEntry())
-                        isActive2 = true
-                    }) {
-                        HStack {
-                            Image("Stool").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
-                            Spacer()
-                            Text("Track Stool")
-                            Spacer()
-                        }
-                    }
+                }) {
+                    Image("Stool").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
+                    Spacer()
+                    Text("Track Stool")
+                    Spacer()
+                }
+                .sheet(isPresented: $isActive2) {
+                    TrackStool(dayIndex: dayIndex, index: dayList.list[dayIndex].stoolEntries.count - 1)
                 }
                 .padding(.all)
                 .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
@@ -167,22 +169,15 @@ struct Home: View {
             .padding(.all)
             .navigationBarTitle("Home", displayMode: .inline)
         }
-        .environmentObject(day)
-        .introspectTabBarController { (UITabBarController) in
-                    UITabBarController.tabBar.isHidden = false
-                    uiTabarController = UITabBarController
-                }
-        .onDisappear {
-            uiTabarController?.tabBar.isHidden = true
-        }
+        .environmentObject(dayList)
         .navigationViewStyle(.stack)
     }
 }
 
 struct Home_Previews: PreviewProvider {
-    static var day = Day()
+    static var dayList = DayList()
     static var previews: some View {
-        Home()
-            .environmentObject(day)
+        Home(dayIndex: 0)
+            .environmentObject(dayList)
     }
 }

@@ -9,15 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject var day = Day()
+    @StateObject var day = Day(date: Date())
     @StateObject var dayList = DayList()
     
     var body: some View {
         
         TabView {
             
-            Home()
-                .environmentObject(day)
+            Home(dayIndex: dayList.list.count - 1)
+                .environmentObject(dayList)
                 .tabItem() {
                     Image(systemName: "house").resizable().aspectRatio(contentMode: .fit).frame(height: 75)
                     Text("Home")

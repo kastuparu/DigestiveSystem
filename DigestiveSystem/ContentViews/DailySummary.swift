@@ -9,7 +9,8 @@ import SwiftUI
 
 struct DailySummary: View {
     
-    @EnvironmentObject private var day: Day
+    @EnvironmentObject private var dayList: DayList
+    let dayIndex: Int
     
     let sleepOptions = ["", "0-2 hours", "3-4 hours", "5-6 hours", "7-8 hours", "9+ hours"]
     let hydrationOptions = ["", "0-2 cups", "3-4 cups", "5-6 cups", "7-8 cups", "9+ cups"]
@@ -17,62 +18,71 @@ struct DailySummary: View {
     
     @State private var isActive1 = false
     @State private var isActive2 = false
+    @State private var selectedEntry: Entry? = nil
     @State private var uiTabarController: UITabBarController?
     
-    init() {
+    init(dayIndex: Int) {
+        
+        self.dayIndex = dayIndex
         UITextView.appearance().backgroundColor = .clear
         UITableView.appearance().backgroundColor = .clear
     }
     
     var body: some View {
         
-        NavigationView {
+        let grains = dayList.list[dayIndex].grains
+        let protein = dayList.list[dayIndex].protein
+        let vegetables = dayList.list[dayIndex].vegetables
+        let fruits = dayList.list[dayIndex].fruits
+        let dairy = dayList.list[dayIndex].dairy
+        let sum = grains + protein + vegetables + fruits
+        
+        ScrollView {
             
             VStack {
+                
+                Text(dayList.list[dayIndex].dateString)
+                    .font(.title)
+                    .padding(.all)
                 
                 HStack {
                     
                     ZStack {
                         
-                        Circle()
-                            .stroke(Color.accentColor, lineWidth: 5)
-                        
-                        let sum = day.grains + day.protein + day.vegetables + day.fruits
-                        
-                        Text(String(day.grains / sum))
-                        
-                        if day.grains != 0 {
+                        if grains != 0 {
                             PieSliceView(pieSliceData: PieSliceData(
                                 startAngle: Angle(degrees: 0.0),
-                                endAngle: Angle(degrees: day.grains / sum * 360.0),
-                                text1: String(Int(day.grains)) + "%",
+                                endAngle: Angle(degrees: grains / sum * 360.0),
+                                text1: String(Int(grains)) + "%",
                                 text2: "Grains"))
                         }
                         
-                        if day.protein != 0 {
+                        if protein != 0 {
                             PieSliceView(pieSliceData: PieSliceData(
-                                startAngle: Angle(degrees: day.grains / sum * 360.0),
-                                endAngle: Angle(degrees: (day.protein + day.grains) / sum * 360.0),
-                                text1: String(Int(day.protein)) + "%",
+                                startAngle: Angle(degrees: grains / sum * 360.0),
+                                endAngle: Angle(degrees: (protein + grains) / sum * 360.0),
+                                text1: String(Int(protein)) + "%",
                                 text2: "Protein"))
                         }
                         
-                        if day.vegetables != 0 {
+                        if vegetables != 0 {
                             PieSliceView(pieSliceData: PieSliceData(
-                                startAngle: Angle(degrees: (day.protein + day.grains) / sum * 360.0),
-                                endAngle: Angle(degrees: (day.vegetables + day.protein + day.grains) / sum * 360.0),
-                                text1: String(Int(day.vegetables)) + "%",
+                                startAngle: Angle(degrees: (protein + grains) / sum * 360.0),
+                                endAngle: Angle(degrees: (vegetables + protein + grains) / sum * 360.0),
+                                text1: String(Int(vegetables)) + "%",
                                 text2: "Vegetables"))
                         }
                         
-                        if day.fruits != 0 {
+                        if fruits != 0 {
                             PieSliceView(pieSliceData: PieSliceData(
-                                startAngle: Angle(degrees: (day.vegetables + day.protein + day.grains) / sum * 360.0),
+                                startAngle: Angle(degrees: (vegetables + protein + grains) / sum * 360.0),
                                 endAngle: Angle(degrees: 360.0),
-                                text1: String(Int(day.fruits)) + "%",
+                                text1: String(Int(fruits)) + "%",
                                 text2: "Fruits"))
                         }
                     }
+                    .padding(.all)
+                    .frame(width: 275, height: 275)
                     
                     VStack {
                         
@@ -82,20 +92,20 @@ struct DailySummary: View {
                                 .frame(width: 75, height: 75)
                             
                             VStack {
-                                Text(String(Int(day.dairy)) + "%")
+                                Text(String(Int(dairy)) + "%")
                                 Text("Dairy")
                             }
                             .foregroundColor(Color.black)
                         }
                         
-                        NavigationLink(destination: TrackFood(index: day.foodEntries.count - 1), isActive: $isActive1) {
-                            
-                            Button(action: {
-                                day.foodEntries.append(FoodEntry())
-                                isActive1 = true
-                            }) {
-                                Image("Food").resizable().aspectRatio(contentMode: .fit)
-                            }
+                        Button(action: {
+                            dayList.list[dayIndex].foodEntries.append(FoodEntry())
+                            isActive1 = true
+                        }) {
+                            Image("Food").resizable().aspectRatio(contentMode: .fit)
+                        }
+                        .sheet(isPresented: $isActive1) {
+                            TrackFood(dayIndex: dayIndex, index: dayList.list[dayIndex].foodEntries.count - 1)
                         }
                         .padding(.vertical)
                         .frame(width: 75, height: 75)
@@ -103,16 +113,16 @@ struct DailySummary: View {
                         .background(Color("AccentColor"))
                         .cornerRadius(12)
                         .font(.title2)
-
                         
-                        NavigationLink(destination: TrackStool(index: day.stoolEntries.count - 1), isActive: $isActive2) {
+                        Button(action: {
+                            dayList.list[dayIndex].stoolEntries.append(StoolEntry())
+                            isActive2 = true
                             
-                            Button(action: {
-                                day.stoolEntries.append(StoolEntry())
-                                isActive2 = true
-                            }) {
-                                Image("Stool").resizable().aspectRatio(contentMode: .fit)
-                            }
+                        }) {
+                            Image("Stool").resizable().aspectRatio(contentMode: .fit)
+                        }
+                        .sheet(isPresented: $isActive2) {
+                            TrackStool(dayIndex: dayIndex, index: dayList.list[dayIndex].stoolEntries.count - 1)
                         }
                         .padding(.all)
                         .frame(width: 75, height: 75)
@@ -121,7 +131,6 @@ struct DailySummary: View {
                         .cornerRadius(12)
                         .font(.title2)
                     }
-                    .padding(.all)
                 }
                 
                 HStack {
@@ -129,7 +138,7 @@ struct DailySummary: View {
                     VStack {
                         Text("Sleep")
                         
-                        Picker("", selection: ($day.sleep)) {
+                        Picker("", selection: ($dayList.list[dayIndex].sleep)) {
                             ForEach(sleepOptions, id: \.self) { Text($0) }
                         }
                         .accentColor(Color.black)
@@ -144,7 +153,7 @@ struct DailySummary: View {
                     VStack {
                         Text("Hydration")
                         
-                        Picker("", selection: ($day.hydration)) {
+                        Picker("", selection: ($dayList.list[dayIndex].hydration)) {
                             ForEach(hydrationOptions, id: \.self) { Text($0) }
                         }
                         .accentColor(Color.black)
@@ -159,7 +168,7 @@ struct DailySummary: View {
                     VStack {
                         Text("Exercise")
                         
-                        Picker("", selection: ($day.exercise)) {
+                        Picker("", selection: ($dayList.list[dayIndex].exercise)) {
                             ForEach(exerciseStressOptions, id: \.self) { Text($0) }
                         }
                         .accentColor(Color.black)
@@ -174,7 +183,7 @@ struct DailySummary: View {
                     VStack {
                         Text("Stress")
                         
-                        Picker("", selection: ($day.stress)) {
+                        Picker("", selection: ($dayList.list[dayIndex].stress)) {
                             ForEach(exerciseStressOptions, id: \.self) { Text($0) }
                         }
                         .accentColor(Color.black)
@@ -186,12 +195,11 @@ struct DailySummary: View {
                         .font(.title2)
                     }
                 }
-                .padding(.all)
                 
                 VStack {
                     Text("Notes (include alcohol, drugs, and caffeine)")
                     
-                    TextEditor(text: $day.notes)
+                    TextEditor(text: $dayList.list[dayIndex].notes)
                         .padding(.all)
                         .frame(maxWidth: .infinity)
                         .frame(maxHeight: 75)
@@ -200,34 +208,58 @@ struct DailySummary: View {
                         .cornerRadius(12)
                         .font(.body)
                 }
-                .padding(.all)
                 
                 Text("Today's Entries")
                 
-                List(day.entries) { entry in
-                    EntryView(entry: entry)
-                }
-                .listStyle(PlainListStyle())
-                
-            }
-            .environmentObject(day)
-            .navigationBarTitle(day.dateString, displayMode: .inline)
-            .introspectTabBarController { (UITabBarController) in
-                        UITabBarController.tabBar.isHidden = true
-                        uiTabarController = UITabBarController
+                ForEach(dayList.list[dayIndex].entries) { entry in
+                    
+                    Button(action: {
+                        selectedEntry = entry
+                    }) {
+                        EntryView(entry: entry, onDelete: {
+                            
+                            let i = dayList.list[dayIndex].getIndex(id: entry.id, typeFood: entry.food)
+                            
+                            if entry.food {
+                                dayList.list[dayIndex].foodEntries.remove(at: i)
+                            }
+                            else {
+                                dayList.list[dayIndex].stoolEntries.remove(at: i)
+                            }
+                            
+                        })
                     }
-            .onDisappear {
-                uiTabarController?.tabBar.isHidden = false
+                    .padding(.all)
+                    .foregroundColor(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
+                    .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("AccentColor")/*@END_MENU_TOKEN@*/)
+                    .cornerRadius(12)
+                    .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
+                }
+                
+                Spacer()
             }
-            .navigationViewStyle(.stack)
+            .sheet(item: self.$selectedEntry) { entry in
+                
+                if entry.food {
+                    let i = dayList.list[dayIndex].getIndex(id: entry.id, typeFood: true)
+                    TrackFood(dayIndex: dayIndex, index: i)
+                }
+                
+                else {
+                    let i = dayList.list[dayIndex].getIndex(id: entry.id, typeFood: false)
+                    TrackStool(dayIndex: dayIndex, index: i)
+                }
+            }
+            .padding(.all)
         }
+        .environmentObject(dayList)
     }
 }
 
 struct DailySummary_Previews: PreviewProvider {
-    static var day = Day()
+    static var dayList = DayList()
     static var previews: some View {
-        DailySummary()
-            .environmentObject(day)
+        DailySummary(dayIndex: 0)
+            .environmentObject(dayList)
     }
 }

@@ -7,10 +7,16 @@
 
 import Foundation
 
-class DayList: ObservableObject, Identifiable {
+class DayList: ObservableObject {
     
-    let id = UUID()
+    @Published var list = [Day(date: Date(timeIntervalSinceNow: -86400)), Day(date: Date())]
     
-    @Published var list = [Day(), Day(), Day()]
-    
+    func getIndex(id: UUID) -> Int {
+        for i in 0...list.count - 1 {
+            if id.uuidString == list[i].id.uuidString {
+                return i
+            }
+        }
+        return -1
+    }
 }

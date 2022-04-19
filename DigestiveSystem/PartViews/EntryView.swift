@@ -10,6 +10,7 @@ import SwiftUI
 struct EntryView: View {
     
     let entry: Entry
+    var onDelete: () -> ()
     
     var body: some View {
         
@@ -21,14 +22,19 @@ struct EntryView: View {
             else {
                 Image("Stool").resizable().aspectRatio(contentMode: .fit).frame(height: 50)
             }
+            
             Text(entry.timeStamp)
                 .padding(.horizontal)
+            
+            Spacer()
             
             Text(entry.shortNotes)
             
             Spacer()
             
-            Image(systemName: "trash").resizable().aspectRatio(contentMode: .fit).frame(height: 35)
+            Button(action: onDelete) {
+                Image(systemName: "trash").resizable().aspectRatio(contentMode: .fit).frame(height: 35)
+            }
             
         }
         .padding(.all)
@@ -41,8 +47,8 @@ struct EntryView: View {
 }
 
 struct EntryView_Previews: PreviewProvider {
-    static let entry = Entry()
+    static var entry = Entry()
     static var previews: some View {
-        EntryView(entry: entry)
+        EntryView(entry: entry, onDelete: {} )
     }
 }

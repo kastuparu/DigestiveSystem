@@ -9,9 +9,13 @@ import Foundation
 
 class Day: ObservableObject, Identifiable {
     
+    init(date: Date) {
+        self.date = date
+    }
+    
     let id = UUID()
     
-    let date = Date()
+    let date: Date
     
     var dateString: String {
         let dateFormatter = DateFormatter()
@@ -39,12 +43,30 @@ class Day: ObservableObject, Identifiable {
         return unsortedEntries.sorted(by: {
             $0.date.compare($1.date) == .orderedAscending
         })
-        
     }
     
-    @Published var foodEntries = [FoodEntry()]
+    func getIndex(id: UUID, typeFood: Bool) -> Int {
+        
+        if typeFood {
+            for i in 0...foodEntries.count - 1 {
+                if id == self.foodEntries[i].id {
+                    return i
+                }
+            }
+        }
+        else {
+            for i in 0...stoolEntries.count - 1 {
+                if id == self.stoolEntries[i].id {
+                    return i
+                }
+            }
+        }
+        return -1
+    }
     
-    @Published var stoolEntries = [StoolEntry()]
+    @Published var foodEntries = [FoodEntry]()
+    
+    @Published var stoolEntries = [StoolEntry]()
     
     
 }
